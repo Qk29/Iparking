@@ -1,9 +1,10 @@
 <?php
 session_start();  // Chỉ gọi một lần ở đây
-
 $routes = [
     'dashboard' => 'pages/dashboard.php',
     'profile' => 'pages/user/profile.php',
+    'event-card' => 'pages/dashboard/show-in-out.php',
+    
     
     // thêm route khác
 ];

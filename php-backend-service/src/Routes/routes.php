@@ -15,6 +15,11 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $userGroup->delete('/{id}', \App\Controllers\UserController::class . ':delete');
         $userGroup->put('/{id}/change-password', \App\Controllers\UserController::class . ':changePassword');
     })->add(new \App\Middleware\AuthMiddleware());
+
+    $group->group('/system', function (RouteCollectorProxy $systemGroup) {
+        $systemGroup->get('/event-cards', \App\Controllers\EventCardController::class . ':index');
+        
+    })->add(new \App\Middleware\AuthMiddleware());
 });
 
 return function (App $app) {

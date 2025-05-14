@@ -28,10 +28,10 @@ class Database
             die("DB connection failed: " . $e->getMessage());
         }
 
-        $hostDb2 = getenv('DB2_HOST');
-        $dbnameDb2 = getenv('DB2_DATABASE');
-        $usernameDb2 = getenv('DB2_USERNAME');
-        $passwordDb2 = getenv('DB2_PASSWORD');
+        $hostDb2 = 'NGUYENQUOCKHANH\QK02092001';
+        $dbnameDb2 = 'MPARKINGEVENTTM';
+        $usernameDb2 = 'sa';
+        $passwordDb2 = 'Qk020901';
 
         $dsnDb2 = "sqlsrv:Server=$hostDb2;Database=$dbnameDb2";
 

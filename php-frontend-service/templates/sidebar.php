@@ -72,7 +72,7 @@
 
                 <li class="nav-item active">
 
-                  <a href="#" class="nav-link">
+                  <a href="index.php?page=event-card" class="nav-link">
                     <i class="nav-icon fa fa-tachometer-alt"></i>
                     <span class="nav-text fadeable">
                	  <span>Bàn làm việc</span>
