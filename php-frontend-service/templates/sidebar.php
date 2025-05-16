@@ -491,7 +491,7 @@
 
 
                       <li class="nav-item">
-                        <a href="html/table-basic.html" class="nav-link">
+                        <a href="index.php?page=role-system" class="nav-link">
                           <span class="menu-text">
                				  <span>Vai trò/ quyền hạn</span>
                           </span>

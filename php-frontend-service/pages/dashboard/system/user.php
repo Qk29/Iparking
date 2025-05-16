@@ -60,7 +60,7 @@
     <table class="table table-bordered table-hover text-center">
       <thead class="table-light">
         <tr>
-          <th><input type="checkbox"></th>
+          <th><input type="checkbox" id="checkAll"></th>
           <th>Tên người dùng</th>
           <th>Số điện thoại</th>
           <th>Tên đăng nhập</th>
@@ -75,7 +75,7 @@
          <?php if (!empty($users)) : ?>
     <?php foreach ($users as $user) : ?>
       <tr>
-        <td><input type="checkbox" name="user_ids[]" value="<?= $user['Id'] ?>"></td>
+        <td><input type="checkbox" class="user-checkbox" name="user_ids[]" value="<?= $user['Id'] ?>"></td>
         <td><?= $user['Name'] ?></td>
         <td><?= $user['Phone'] ?></td>
         <td><?= $user['Username'] ?></td>
@@ -134,5 +134,14 @@
     <button class="btn btn-sm btn-success"><i class="bi bi-plus-circle"></i> Thêm mới</button>
   </div>
 </div>
+
+<script>
+  document.getElementById('checkAll').addEventListener('change', function () {
+    const isChecked = this.checked;
+    document.querySelectorAll('.user-checkbox').forEach(function (checkbox) {
+      checkbox.checked = isChecked;
+    });
+  });
+</script>
 
 

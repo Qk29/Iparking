@@ -16,14 +16,16 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $userGroup->put('/{id}/change-password', \App\Controllers\UserController::class . ':changePassword');
     })->add(new \App\Middleware\AuthMiddleware());
 
+    
+
     $group->group('/system', function (RouteCollectorProxy $systemGroup) {
         $systemGroup->get('/event-cards', \App\Controllers\EventCardController::class . ':index');
 
         $systemGroup->get('/users', \App\Controllers\UserController::class . ':index');
 
-        $systemGroup->get('/roles', \App\Controllers\UserController::class . ':role');
+        $systemGroup->get('/roles', \App\Controllers\RoleController::class . ':role');
 
-        $systemGroup->put('/users/{id}/role', \App\Controllers\UserController::class . ':updateRole');
+        $systemGroup->put('/users/{id}/role', \App\Controllers\RoleController::class . ':updateRole');
         
     })->add(new \App\Middleware\AuthMiddleware());
 });

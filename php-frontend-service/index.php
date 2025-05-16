@@ -6,6 +6,7 @@ $routes = [
     'event-card' => 'pages/dashboard/show-in-out.php',
     'car-in' =>'pages/dashboard/report/car-in.php',
     'user-system' => 'pages/dashboard/system/user.php',
+    'role-system' => 'pages/dashboard/system/role-system.php'
 
     // thêm route khác
 ];
