@@ -58,15 +58,6 @@
                 <li class="nav-item-caption">
                   <span class="fadeable pl-3">MAIN</span>
                   <span class="fadeinable mt-n2 text-125">&hellip;</span>
-                  <!--
-               			OR something like the following (with `.hideable` text)
-               		-->
-                  <!--
-               			<div class="hideable">
-               				<span class="pl-3">MAIN</span>
-               			</div>
-               			<span class="fadeinable mt-n2 text-125">&hellip;</span>
-               		-->
                 </li>
 
 
@@ -89,142 +80,113 @@
                 <li class="nav-item">
 
                   <a href="#" class="nav-link dropdown-toggle collapsed">
-                    <i class="nav-icon fa fa-cube"></i>
+                    <i class="nav-icon fa fa-chart-line"></i>
                     <span class="nav-text fadeable">
                	  <span>Báo cáo</span>
                     </span>
-
                     <b class="caret fa fa-angle-left rt-n90"></b>
-
-                    <!-- or you can use custom icons. first add `d-style` to 'A' -->
-                    <!--
-               	 	<b class="caret d-n-collapsed fa fa-minus text-80"></b>
-               	 	<b class="caret d-collapsed fa fa-plus text-80"></b>
-               	 -->
                   </a>
 
                   <div class="hideable submenu collapse">
                     <ul class="submenu-inner">
 
+                     <li class="nav-item">
+                      <a href="#" class="nav-link dropdown-toggle collapsed" data-toggle="collapse" data-target="#submenu-xe-trong-bai" aria-expanded="false">
+                        <span class="nav-text">
+                          <span>Xe trong bãi</span>
+                        </span>
+                        <b class="caret fa fa-angle-left rt-n90"></b>
+                      </a>
+
+                      <div class="submenu collapse" id="submenu-xe-trong-bai">
+                        <ul class="submenu-inner">
+
+                          <li class="nav-item">
+                            <a href="index.php?page=car-in" class="nav-link">
+                              <span class="nav-text">
+                                <span>Xe trong bãi hiện tại</span>
+                              </span>
+                            </a>
+                          </li>
+
+                          <li class="nav-item">
+                            <a href="html/chi-tiet-xe-trong-bai.html" class="nav-link">
+                              <span class="nav-text">
+                                <span>Chi tiết xe trong bãi</span>
+                              </span>
+                            </a>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </li>
+
                       <li class="nav-item">
-
-                        <a href="html/dashboard-2.html" class="nav-link">
-
+                        <a href="#" class="nav-link dropdown-toggle collapsed"  data-toggle="collapse" data-target="#submenu-xe-vao-ra" aria-expanded="false">
                           <span class="nav-text">
-               				  <span>Dashboard 2</span>
-                          </span>
-
-
+               				  <span>Xe vào/ra</span>
+                          <b class="caret fa fa-angle-left rt-n90"></b>
                         </a>
+                        <div class="submenu collapse" id="submenu-xe-vao-ra">
+                        <ul class="submenu-inner">
 
-
+                          <li class="nav-item">
+                            <a href="#" class="nav-link">
+                              <span class="nav-text">
+                                <span>Xe ra khỏi bãi</span>
+                              </span>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link">
+                              <span class="nav-text">
+                                <span>Xe vào bãi</span>
+                              </span>
+                            </a>
+                          </li>
+                        </ul>
+                        </div>
                       </li>
 
-
                       <li class="nav-item">
-
-                        <a href="html/dashboard-3.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Dashboard 3</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
                         <a href="html/dashboard-4.html" class="nav-link">
-
                           <span class="nav-text">
-               				  <span>Dashboard 4</span>
+               				  <span>Thu tiền thẻ lượt</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
 
-
                       <li class="nav-item">
-
                         <a href="html/horizontal.html" class="nav-link">
-
                           <span class="nav-text">
-               				  <span>Horizontal Menu</span>
+               				  <span>Báo cáo lượt xe ra vào miễn phí</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
 
-
                       <li class="nav-item">
-
                         <a href="html/two-menus-1.html" class="nav-link">
-
                           <span class="nav-text">
-               				  <span>Two Menus</span>
+               				  <span>Xử lí thẻ</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
 
-
                       <li class="nav-item">
-
                         <a href="html/landing-page-1.html" class="nav-link">
-
                           <span class="nav-text">
-               				  <span>Landing Page 1</span>
+               				  <span>Sự kiện cảnh báo</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
 
-
                       <li class="nav-item">
-
                         <a href="html/landing-page-2.html" class="nav-link">
-
                           <span class="nav-text">
-               				  <span>Landing Page 2</span>
+               				  <span>Thẻ theo căn hộ</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/coming-soon.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Coming Soon</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
                     </ul>
                   </div>
 
@@ -236,7 +198,7 @@
                 <li class="nav-item">
 
                   <a href="#" class="nav-link dropdown-toggle collapsed">
-                    <i class="nav-icon fa fa-desktop"></i>
+                    <i class="nav-icon fa fa-chart-pie"></i>
                     <span class="nav-text fadeable">
                	  <span>Biểu đồ</span>
                     </span>
@@ -252,170 +214,7 @@
 
                   <div class="hideable submenu collapse">
                     <ul class="submenu-inner">
-
-                      <li class="nav-item">
-
-                        <a href="html/buttons.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Buttons</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/button-groups.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Button Groups</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/alerts.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Alerts</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/modals.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Modals</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/asides.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Asides</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/tabs.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Tabs</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/accordions.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Accordions</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/tooltips.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Tooltips &amp; Popovers</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/badges.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Badges</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/pagination.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Pagination</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/dropdowns.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Dropdowns</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
+                      
 
 
                       <li class="nav-item">
@@ -449,145 +248,22 @@
 
 
                       <li class="nav-item">
-
                         <a href="html/charts.html" class="nav-link">
-
                           <span class="nav-text">
                				  <span>Charts</span>
                           </span>
-
-
                         </a>
 
 
                       </li>
 
-
                       <li class="nav-item">
-
                         <a href="html/treeview.html" class="nav-link">
-
                           <span class="nav-text">
                				  <span>Treeview</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="#" class="nav-link dropdown-toggle collapsed">
-
-                          <span class="nav-text">
-               				  <span>Nested Links</span>
-                          </span>
-
-                          <b class="caret fa fa-angle-left rt-n90"></b>
-
-                          <!-- or you can use custom icons. first add `d-style` to 'A' -->
-                          <!--
-               				 	<b class="caret d-n-collapsed fa fa-minus text-80"></b>
-               				 	<b class="caret d-collapsed fa fa-plus text-80"></b>
-               				 -->
-                        </a>
-
-                        <div class=" submenu collapse">
-                          <ul class="submenu-inner">
-
-                            <li class="nav-item">
-
-                              <a href="#" class="nav-link dropdown-toggle collapsed">
-                                <i class="nav-icon fa fa-caret-right text-blue-l2 mr-2"></i>
-                                <span class="nav-text">
-               							  <span>Third Level Menu</span>
-                                </span>
-
-                                <b class="caret fa fa-angle-left rt-n90"></b>
-
-                                <!-- or you can use custom icons. first add `d-style` to 'A' -->
-                                <!--
-               							 	<b class="caret d-n-collapsed fa fa-minus text-80"></b>
-               							 	<b class="caret d-collapsed fa fa-plus text-80"></b>
-               							 -->
-                              </a>
-
-                              <div class=" submenu collapse">
-                                <ul class="submenu-inner">
-
-                                  <li class="nav-item">
-
-                                    <a href="#" class="nav-link dropdown-toggle collapsed">
-                                      <i class="nav-icon fa fa-leaf text-success-l2 text-90 mr-2"></i>
-                                      <span class="nav-text">
-               										  <span>Fourth Level</span>
-                                      </span>
-
-                                      <b class="caret fa fa-angle-left rt-n90"></b>
-
-                                      <!-- or you can use custom icons. first add `d-style` to 'A' -->
-                                      <!--
-               										 	<b class="caret d-n-collapsed fa fa-minus text-80"></b>
-               										 	<b class="caret d-collapsed fa fa-plus text-80"></b>
-               										 -->
-                                    </a>
-
-                                    <div class=" submenu collapse">
-                                      <ul class="submenu-inner">
-
-                                        <li class="nav-item">
-
-                                          <a href="#" class="nav-link">
-                                            <i class="nav-icon fa fa-stop text-warning-l1 text-80 mx-2"></i>
-                                            <span class="nav-text">
-               													  <span>5th Level</span>
-                                            </span>
-
-
-                                          </a>
-
-
-                                        </li>
-
-
-                                        <li class="nav-item">
-
-                                          <a href="#" class="nav-link">
-                                            <i class="nav-icon fa fa-stop text-warning-l1 text-80 mx-2"></i>
-                                            <span class="nav-text">
-               													  <span>5th Level</span>
-                                            </span>
-
-
-                                          </a>
-
-
-                                        </li>
-
-                                      </ul>
-                                    </div>
-
-                                    <b class="sub-arrow"></b>
-
-                                  </li>
-
-                                </ul>
-                              </div>
-
-                              <b class="sub-arrow"></b>
-
-                            </li>
-
-                          </ul>
-                        </div>
-
-                        <b class="sub-arrow"></b>
-
-                      </li>
-
                     </ul>
                   </div>
 
@@ -599,7 +275,7 @@
                 <li class="nav-item">
 
                   <a href="#" class="nav-link dropdown-toggle collapsed">
-                    <i class="nav-icon fa fa-table"></i>
+                    <i class="nav-icon fa fa-id-card"></i>
                     <span class="nav-text fadeable">
                	  <span>Quản lí thẻ</span>
                     </span>
@@ -617,34 +293,20 @@
                     <ul class="submenu-inner">
 
                       <li class="nav-item">
-
                         <a href="html/table-basic.html" class="nav-link">
-
                           <span class="nav-text">
                				  <span>Basic Tables</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
 
-
                       <li class="nav-item">
-
                         <a href="html/table-datatables.html" class="nav-link">
-
                           <span class="nav-text">
                				  <span>DataTables</span>
                           </span>
-
-
                         </a>
-
-
                       </li>
-
 
                       <li class="nav-item">
 
@@ -686,7 +348,7 @@
                 <li class="nav-item">
 
                   <a href="#" class="nav-link dropdown-toggle collapsed">
-                    <i class="nav-icon fa fa-edit"></i>
+                    <i class="nav-icon fa fa-users"></i>
                     <span class="nav-text fadeable">
                	  <span>Quản lý khách hàng</span>
                     </span>
@@ -787,54 +449,88 @@
 
                 <li class="nav-item">
 
-                  <a href="html/cards.html" class="nav-link">
-                    <i class="nav-icon far fa-window-restore"></i>
+                  <a href="#" class="nav-link dropdown-toggle collapsed">
+                    <i class="nav-icon far fa fa-folder-open"></i>
                     <span class="nav-text fadeable">
                	  <span>Danh Mục</span>
                     </span>
-
+                    <b class="caret fa fa-angle-left rt-n90"></b>
 
                   </a>
-
-                  <b class="sub-arrow"></b>
-
                 </li>
 
-
                 <li class="nav-item">
-
-                  <a href="html/calendar.html" class="nav-link">
-                    <i class="nav-icon far fa-calendar-alt"></i>
+                  <a href="html/calendar.html" class="nav-link dropdown-toggle collapsed">
+                    <i class="nav-icon far fa fa-desktop"></i>
                     <span class="nav-text fadeable">
                	  <span>Cài đặt thiết bị</span>
+                  <b class="caret fa fa-angle-left rt-n90"></b>
                   </a>
-
-                  <b class="sub-arrow"></b>
-
                 </li>
 
 
                 <li class="nav-item">
 
-                  <a href="html/gallery.html" class="nav-link">
-                    <i class="nav-icon far fa-image"></i>
+                  <a href="" class="nav-link dropdown-toggle collapsed">
+                    <i class="nav-icon far fa fa-cog"></i>
                     <span class="nav-text fadeable">
                	  <span>Hệ thống</span>
+                  <b class="caret fa fa-angle-left rt-n90"></b>
                     </span>
-
-
                   </a>
+                  <div class="hideable submenu collapse">
+                    <ul class="submenu-inner">
 
-                  <b class="sub-arrow"></b>
+                      <li class="nav-item">
+                        <a href="index.php?page=user-system" class="nav-link">
+                          <span class="menu-text">
+               				  <span>Người dùng</span>
+                          </span>
+                        </a>
+                      </li>
 
+
+                      <li class="nav-item">
+                        <a href="html/table-basic.html" class="nav-link">
+                          <span class="menu-text">
+               				  <span>Vai trò/ quyền hạn</span>
+                          </span>
+                        </a>
+                      </li>
+
+
+                      <li class="nav-item">
+                        <a href="html/table-basic.html" class="nav-link">
+                          <span class="menu-text">
+               				  <span>Danh mục hệ thống</span>
+                          </span>
+                        </a>
+                      </li>
+
+
+                      <li class="nav-item">
+                        <a href="html/table-basic.html" class="nav-link">
+                          <span class="menu-text">
+               				  <span>Tham số hệ thống</span>
+                          </span>
+                        </a>
+                      </li>
+
+
+                      <li class="nav-item">
+                        <a href="html/table-basic.html" class="nav-link">
+                          <span class="menu-text">
+               				  <span>Nhật ký hệ thống</span>
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </li>
 
               </ul>
 
             </div><!-- /.sidebar scroll -->
-
-
-            
 
           </div>
         </div>

@@ -13,13 +13,19 @@ class User
         $this->db = Database::getInstance();
     }
 
-    public function all()
+    public static function all()
     {
-        $stmt = $this->db->query("SELECT * FROM dbo.User");
+        $db = Database::getInstance();
+        $stmt = $db->query("SELECT u.*, r.RoleName FROM [User] u LEFT JOIN [UserRole] ur ON u.Id = ur.UserId LEFT JOIN [Role] r ON ur.RoleId = r.Id");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
+    public static function allRole(){
+        $db = Database::getInstance();
+        $stmt = $db->query("SELECT * FROM [Role]");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
      public static function updateUser($id, $name, $email, $username, $phone) {
         $db = Database::getInstance();
         $stmt = $db->prepare("UPDATE [User] SET Name = :name, Email = :email, Username = :username, Phone = :phone WHERE Id = :id");

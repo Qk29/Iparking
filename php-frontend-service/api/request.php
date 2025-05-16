@@ -2,9 +2,9 @@
 function apiRequest($method, $url, $data = null, $token = null) {
     $curl = curl_init($url);
     $headers = ['Content-Type: application/json'];
-    // if ($token) {
-    //     $headers[] = "Authorization: Bearer $token";
-    // }
+    if ($token) {
+        $headers[] = "Authorization: Bearer $token";
+    }
 
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
     if ($data) {

@@ -30,7 +30,7 @@ class AuthController
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
          error_log(print_r($user, true));
 // 
-        if (!$user || $password !== $user['Password'] ) {
+        if (!$user || !password_verify($password, $user['Password']) ) {
             $response->getBody()->write(json_encode(['error' => 'Invalid credentials']));
             return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
         }

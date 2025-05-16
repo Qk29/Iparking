@@ -11,6 +11,21 @@ use Psr\Http\Message\ResponseInterface;
 
 class UserController {
 
+
+    public function index(Request $request, Response $response): Response {
+        $users = User::all();
+        $response->getBody()->write(json_encode($users));
+        return $response->withHeader('Content-Type', 'application/json');
+
+    }
+
+    public function role(Request $request, Response $response): Response {
+        $roles = User::allRole();
+        $response->getBody()->write(json_encode($roles));
+        return $response->withHeader('Content-Type', 'application/json');
+
+    }
+
     // Cập nhật thông tin người dùng
     public function update(Request $request, Response $response, $args): Response {
         

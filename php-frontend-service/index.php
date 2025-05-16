@@ -4,8 +4,9 @@ $routes = [
     'dashboard' => 'pages/dashboard.php',
     'profile' => 'pages/user/profile.php',
     'event-card' => 'pages/dashboard/show-in-out.php',
-    
-    
+    'car-in' =>'pages/dashboard/report/car-in.php',
+    'user-system' => 'pages/dashboard/system/user.php',
+
     // thêm route khác
 ];
 $page = $_GET['page'] ?? 'dashboard';

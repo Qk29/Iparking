@@ -18,6 +18,10 @@ $app->group('/api', function (RouteCollectorProxy $group) {
 
     $group->group('/system', function (RouteCollectorProxy $systemGroup) {
         $systemGroup->get('/event-cards', \App\Controllers\EventCardController::class . ':index');
+
+        $systemGroup->get('/users', \App\Controllers\UserController::class . ':index');
+
+        $systemGroup->get('/roles', \App\Controllers\UserController::class . ':role');
         
     })->add(new \App\Middleware\AuthMiddleware());
 });
