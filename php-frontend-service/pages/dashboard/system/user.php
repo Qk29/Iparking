@@ -9,12 +9,29 @@
     $roleApiUrl = 'http://localhost:8000/api/system/roles';
     $roleResponse = apiRequest('GET', $roleApiUrl);
     $roles = json_decode($roleResponse, true);
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $roleId = $_POST['role_id'];
+        $userIds = $_POST['user_ids'] ?? [];
+
+        if (!empty($userIds)) {
+            foreach ($userIds as $userId) {
+                // Gửi yêu cầu cập nhật vai trò cho từng người dùng
+                $updateUrl = "http://localhost:8000/api/system/users/$userId/role";
+                apiRequest('PUT', $updateUrl, ['role_id' => $roleId]);
+            }
+            echo "<script>alert('Phân quyền thành công!');</script>";
+        } else {
+            echo "<script>alert('Vui lòng chọn ít nhất một người dùng!');</script>";
+        }
+    }
 ?>
 
 <div class="container mt-5">
   <h4 class="mb-4">Danh sách người dùng</h4>
 
   <!-- Tìm kiếm và phân quyền -->
+   <form method="POST" action="">
   <div class="row mb-3">
     <div class="col-md-4">
       <input type="text" class="form-control" placeholder="Từ khóa...">
@@ -24,8 +41,9 @@
       <button class="btn btn-sm btn-secondary">Nạp lại</button>
     </div>
     
+    
     <div class="col-md-2">
-      <select class="form-select">
+      <select class="form-select" name="role_id">
         <option selected>-- Lựa chọn --</option>
         <?php foreach($roles as $role): ?>
         <option value="<?= $role['Id'] ?>"><?= $role['RoleName']?></option>
@@ -33,7 +51,7 @@
       </select>
     </div>
     <div class="col-md-2 d-flex align-items-center">
-      <button class="btn btn-sm btn-warning">Phân quyền</button>
+      <button type="submit" class="btn btn-sm btn-warning">Phân quyền</button>
     </div>
   </div>
 
@@ -57,7 +75,7 @@
          <?php if (!empty($users)) : ?>
     <?php foreach ($users as $user) : ?>
       <tr>
-        <td><input type="checkbox"></td>
+        <td><input type="checkbox" name="user_ids[]" value="<?= $user['Id'] ?>"></td>
         <td><?= $user['Name'] ?></td>
         <td><?= $user['Phone'] ?></td>
         <td><?= $user['Username'] ?></td>
@@ -98,6 +116,7 @@
       </tbody>
     </table>
   </div>
+  </form>
 
   <!-- Phân trang -->
   <nav>

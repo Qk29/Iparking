@@ -22,6 +22,8 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $systemGroup->get('/users', \App\Controllers\UserController::class . ':index');
 
         $systemGroup->get('/roles', \App\Controllers\UserController::class . ':role');
+
+        $systemGroup->put('/users/{id}/role', \App\Controllers\UserController::class . ':updateRole');
         
     })->add(new \App\Middleware\AuthMiddleware());
 });
