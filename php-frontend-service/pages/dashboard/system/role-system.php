@@ -1,5 +1,5 @@
 <?php 
-    include_once __DIR__ . '/../../../api/request.php';;
+    include_once __DIR__ . '/../../../api/request.php';
 
     // call api role
     $roleApiUrl = 'http://localhost:8000/api/system/roles';

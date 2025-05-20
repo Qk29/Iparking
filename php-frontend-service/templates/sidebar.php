@@ -448,15 +448,47 @@
 
 
                 <li class="nav-item">
-
                   <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                     <i class="nav-icon far fa fa-folder-open"></i>
                     <span class="nav-text fadeable">
                	  <span>Danh Mục</span>
                     </span>
                     <b class="caret fa fa-angle-left rt-n90"></b>
-
                   </a>
+
+                  <div class="hideable submenu collapse">
+                    <ul class="submenu-inner">
+
+                      <li class="nav-item">
+                        <a href="index.php?page=card-category" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>Nhóm thẻ</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="index.php?page=user-system" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>Nhóm căn hộ</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="index.php?page=user-system" class="nav-link">
+                          <span class="menu-text">
+                          <i class="fas fa-caret-right mr-1 "></i>
+
+               				    <span>Nhóm khách hàng</span>
+                          </span>
+                        </a>
+                      </li>
+
+                    </ul>
+                  </div>
                 </li>
 
                 <li class="nav-item">
@@ -484,7 +516,8 @@
                       <li class="nav-item">
                         <a href="index.php?page=user-system" class="nav-link">
                           <span class="menu-text">
-               				  <span>Người dùng</span>
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				      <span>Người dùng</span>
                           </span>
                         </a>
                       </li>
@@ -493,7 +526,8 @@
                       <li class="nav-item">
                         <a href="index.php?page=role-system" class="nav-link">
                           <span class="menu-text">
-               				  <span>Vai trò/ quyền hạn</span>
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				      <span>Vai trò/ quyền hạn</span>
                           </span>
                         </a>
                       </li>
@@ -502,7 +536,8 @@
                       <li class="nav-item">
                         <a href="html/table-basic.html" class="nav-link">
                           <span class="menu-text">
-               				  <span>Danh mục hệ thống</span>
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				      <span>Danh mục hệ thống</span>
                           </span>
                         </a>
                       </li>
@@ -511,7 +546,8 @@
                       <li class="nav-item">
                         <a href="html/table-basic.html" class="nav-link">
                           <span class="menu-text">
-               				  <span>Tham số hệ thống</span>
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				      <span>Tham số hệ thống</span>
                           </span>
                         </a>
                       </li>
@@ -520,7 +556,8 @@
                       <li class="nav-item">
                         <a href="html/table-basic.html" class="nav-link">
                           <span class="menu-text">
-               				  <span>Nhật ký hệ thống</span>
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				      <span>Nhật ký hệ thống</span>
                           </span>
                         </a>
                       </li>

@@ -20,16 +20,26 @@ $app->group('/api', function (RouteCollectorProxy $group) {
 
     $group->group('/system', function (RouteCollectorProxy $systemGroup) {
         $systemGroup->get('/event-cards', \App\Controllers\EventCardController::class . ':index');
-
         $systemGroup->get('/users', \App\Controllers\UserController::class . ':index');
-
         $systemGroup->get('/roles', \App\Controllers\RoleController::class . ':role');
-
         $systemGroup->put('/users/{id}/role', \App\Controllers\RoleController::class . ':updateRole');
-
         $systemGroup->post('/add-user', \App\Controllers\UserController::class . ':addUserSystem');
         $systemGroup->put('/users/{id}/soft-delete', \App\Controllers\UserController::class . ':softDeleteUser');
-        
+    })->add(new \App\Middleware\AuthMiddleware());
+
+
+    $group->group('/category', function (RouteCollectorProxy $categoryGroup) {
+        $categoryGroup->get('/card-category', \App\Controllers\CardCategoryController::class . ':index');
+        $categoryGroup->get('/add-card-category', \App\Controllers\CardCategoryController::class . ':create');
+    })->add(new \App\Middleware\AuthMiddleware());
+
+
+    $group->group('/lane', function (RouteCollectorProxy $laneGroup) {
+        $laneGroup->get('/get-all', \App\Controllers\LaneController::class . ':index'); 
+    })->add(new \App\Middleware\AuthMiddleware());
+
+    $group->group('/vehicle-group', function (RouteCollectorProxy $vehicleGroup) {
+        $vehicleGroup->get('/get-all', \App\Controllers\VehicleGroupController::class . ':index'); 
     })->add(new \App\Middleware\AuthMiddleware());
 });
 
