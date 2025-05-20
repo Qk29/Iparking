@@ -26,6 +26,9 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $systemGroup->get('/roles', \App\Controllers\RoleController::class . ':role');
 
         $systemGroup->put('/users/{id}/role', \App\Controllers\RoleController::class . ':updateRole');
+
+        $systemGroup->post('/add-user', \App\Controllers\UserController::class . ':addUserSystem');
+        $systemGroup->put('/users/{id}/soft-delete', \App\Controllers\UserController::class . ':softDeleteUser');
         
     })->add(new \App\Middleware\AuthMiddleware());
 });

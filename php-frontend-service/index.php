@@ -6,11 +6,13 @@ $routes = [
     'event-card' => 'pages/dashboard/show-in-out.php',
     'car-in' =>'pages/dashboard/report/car-in.php',
     'user-system' => 'pages/dashboard/system/user.php',
-    'role-system' => 'pages/dashboard/system/role-system.php'
+    'role-system' => 'pages/dashboard/system/role-system.php',
+    'add-user' => 'pages/dashboard/system/add-user.php',
+    'update-user-system' => 'pages/dashboard/system/update-user-system.php',
 
     // thêm route khác
 ];
-$page = $_GET['page'] ?? 'dashboard';
+$page = $_GET['page'] ?? 'dashboard';   
 
 // Kiểm tra token trong session
 if (isset($_SESSION['token'])) {

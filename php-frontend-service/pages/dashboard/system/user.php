@@ -10,21 +10,47 @@
     $roleResponse = apiRequest('GET', $roleApiUrl);
     $roles = json_decode($roleResponse, true);
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $roleId = $_POST['role_id'];
-        $userIds = $_POST['user_ids'] ?? [];
+    
 
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      if(isset($_POST['role_id'])) {
+        $roleId = $_POST['role_id'] ?? null;
+        $userIds = $_POST['user_ids'] ?? [];
+        
         if (!empty($userIds)) {
             foreach ($userIds as $userId) {
-                // Gửi yêu cầu cập nhật vai trò cho từng người dùng
                 $updateUrl = "http://localhost:8000/api/system/users/$userId/role";
                 apiRequest('PUT', $updateUrl, ['role_id' => $roleId]);
             }
             echo "<script>alert('Phân quyền thành công!');</script>";
+            // Refresh the page to see the changes
+            echo "<script>window.location.href = 'index.php?page=user-system';</script>";
+            exit;
         } else {
             echo "<script>alert('Vui lòng chọn ít nhất một người dùng!');</script>";
         }
     }
+
+      if(isset($_POST['delete_id'])) {
+              $deleteId = $_POST['delete_id'];
+              $deleteUrl = "http://localhost:8000/api/system/users/$deleteId/soft-delete";
+              $deleteResponse = apiRequest('PUT', $deleteUrl);
+
+              $result = json_decode($deleteResponse, true);
+              if(isset($result['success']) && $result['success']) {
+                  echo "<script>alert('Đã xoá mềm người dùng thành công!'); </script>";
+                  // Refresh the page to see the changes
+                  echo "<script>window.location.href = 'index.php?page=user-system';</script>";
+              } else {
+                  echo "<script>alert('Xoá mềm thất bại: " . ($result['message'] ?? 'Lỗi không xác định') . "');</script>";
+              }
+      }
+      
+}
+
+    
 ?>
 
 <div class="container mt-5">
@@ -53,7 +79,17 @@
     <div class="col-md-2 d-flex align-items-center">
       <button type="submit" class="btn btn-sm btn-warning">Phân quyền</button>
     </div>
+
+    <div class="col-md-2 d-flex align-items-center">
+       <!-- Thêm mới -->
+ 
+    <a href="index.php?page=add-user" class="btn btn-sm btn-success"> Thêm mới</a>
+ 
+    </div>
+    
   </div>
+
+
 
   <!-- Bảng người dùng -->
   <div class="table-responsive">
@@ -91,15 +127,17 @@
         <td><?= $user['RoleName']?></td>
         <td class="action-icons">
             <!-- Sửa -->
-            <a href="#" title="Sửa">
+            <a href="index.php?page=update-user-system" title="Sửa">
                 <i class="ace-icon fa fa-pencil bigger-120" style="color:green;"></i>
             </a>
 
             <!-- Xóa -->
-            <a href="#" class="btnDelete" title="Xóa">
+            <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
+            <input type="hidden" name="delete_id" value="<?= $user['Id'] ?>">
+            <button type="submit" class="btnDelete" title="Xóa" style="border:none; background:none; cursor:pointer;">
                 <i class="ace-icon fa fa-trash bigger-120" style="color:red;"></i>
-            </a>
-
+            </button>
+            </form>
             <!-- Phục hồi -->
             <a href="#" class="btnRes" title="Phục hồi">
                 <i class="ace-icon fa fa-recycle bigger-120" style="color:orange;"></i>
@@ -116,7 +154,7 @@
       </tbody>
     </table>
   </div>
-  </form>
+    </form>
 
   <!-- Phân trang -->
   <nav>
@@ -129,10 +167,7 @@
     </ul>
   </nav>
 
-  <!-- Thêm mới -->
-  <div class="mt-3">
-    <button class="btn btn-sm btn-success"><i class="bi bi-plus-circle"></i> Thêm mới</button>
-  </div>
+ 
 </div>
 
 <script>
@@ -142,6 +177,8 @@
       checkbox.checked = isChecked;
     });
   });
+
+  
 </script>
 
 

@@ -10,9 +10,9 @@ if (!isset($_SESSION['user'])) {
 $name = $_SESSION['user']['Name'];
 $username = $_SESSION['user']['Username'];
     
- include_once 'header.php';
- ?>
 
+ ?>
+<?php include_once 'header.php'; ?>
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->

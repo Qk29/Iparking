@@ -25,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $response = apiRequest('PUT', "http://localhost:8000/api/users/$id", $data);
         $result = json_decode($response, true);
-    var_dump($response);
-    var_dump($result);
+    
         if ( isset($result['success']) && $result['success']) {
             echo "<script>alert('Cập nhật thông tin thành công');</script>";
         } elseif(isset($result['message']) && !$result['message']) {

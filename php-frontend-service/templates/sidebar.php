@@ -45,7 +45,7 @@
                   <div class="fadeable d-inline-flex align-items-center ml-3 ml-lg-0">
                     <i class="fa fa-search mr-n3 text-info-m1"></i>
                     <input type="text" class="sidebar-search-input pl-4 pr-3 mr-n2" maxlength="60" placeholder="Search ..." aria-label="Search" />
-                    <a href="#" class="ml-n25 px-2 py-1 radius-round bgc-h-secondary-l2 mb-2px">
+                    <a href="javascript:void(0)" class="ml-n25 px-2 py-1 radius-round bgc-h-secondary-l2 mb-2px">
                       <i class="fa fa-microphone px-3px text-dark-tp5"></i>
                     </a>
                   </div>
@@ -79,7 +79,7 @@
 
                 <li class="nav-item">
 
-                  <a href="#" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                     <i class="nav-icon fa fa-chart-line"></i>
                     <span class="nav-text fadeable">
                	  <span>Báo cáo</span>
@@ -91,7 +91,7 @@
                     <ul class="submenu-inner">
 
                      <li class="nav-item">
-                      <a href="#" class="nav-link dropdown-toggle collapsed" data-toggle="collapse" data-target="#submenu-xe-trong-bai" aria-expanded="false">
+                      <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed" data-toggle="collapse" data-target="#submenu-xe-trong-bai" aria-expanded="false">
                         <span class="nav-text">
                           <span>Xe trong bãi</span>
                         </span>
@@ -122,7 +122,7 @@
                     </li>
 
                       <li class="nav-item">
-                        <a href="#" class="nav-link dropdown-toggle collapsed"  data-toggle="collapse" data-target="#submenu-xe-vao-ra" aria-expanded="false">
+                        <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed"  data-toggle="collapse" data-target="#submenu-xe-vao-ra" aria-expanded="false">
                           <span class="nav-text">
                				  <span>Xe vào/ra</span>
                           <b class="caret fa fa-angle-left rt-n90"></b>
@@ -131,14 +131,14 @@
                         <ul class="submenu-inner">
 
                           <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="javascript:void(0)" class="nav-link">
                               <span class="nav-text">
                                 <span>Xe ra khỏi bãi</span>
                               </span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="javascript:void(0)" class="nav-link">
                               <span class="nav-text">
                                 <span>Xe vào bãi</span>
                               </span>
@@ -197,7 +197,7 @@
 
                 <li class="nav-item">
 
-                  <a href="#" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                     <i class="nav-icon fa fa-chart-pie"></i>
                     <span class="nav-text fadeable">
                	  <span>Biểu đồ</span>
@@ -274,7 +274,7 @@
 
                 <li class="nav-item">
 
-                  <a href="#" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                     <i class="nav-icon fa fa-id-card"></i>
                     <span class="nav-text fadeable">
                	  <span>Quản lí thẻ</span>
@@ -347,7 +347,7 @@
 
                 <li class="nav-item">
 
-                  <a href="#" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                     <i class="nav-icon fa fa-users"></i>
                     <span class="nav-text fadeable">
                	  <span>Quản lý khách hàng</span>
@@ -449,7 +449,7 @@
 
                 <li class="nav-item">
 
-                  <a href="#" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                     <i class="nav-icon far fa fa-folder-open"></i>
                     <span class="nav-text fadeable">
                	  <span>Danh Mục</span>
@@ -471,7 +471,7 @@
 
                 <li class="nav-item">
 
-                  <a href="" class="nav-link dropdown-toggle collapsed">
+                  <a href="" class="nav-link dropdown-toggle collapsed" id="menu-he-thong">
                     <i class="nav-icon far fa fa-cog"></i>
                     <span class="nav-text fadeable">
                	  <span>Hệ thống</span>
@@ -534,5 +534,41 @@
 
           </div>
         </div>
+
+        <!-- Js -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menu = document.getElementById("menu-he-thong");
+    const parentLi = menu.closest(".nav-item");
+    const submenu = parentLi.querySelector(".submenu");
+
+    // Mở menu nếu trước đó đã mở
+    const menuState = localStorage.getItem("menu-he-thong-open");
+    if (menuState === "true") {
+      submenu.classList.add("show");
+      menu.classList.remove("collapsed");
+      parentLi.classList.add("open");
+    }
+
+    // Khi click vào menu chính, lưu trạng thái
+    menu.addEventListener("click", function (e) {
+      e.preventDefault(); // Ngăn reload nếu có href=""
+
+      const isOpen = submenu.classList.contains("show");
+
+      if (isOpen) {
+        submenu.classList.remove("show");
+        parentLi.classList.remove("open");
+        menu.classList.add("collapsed");
+        localStorage.setItem("menu-he-thong-open", "false");
+      } else {
+        submenu.classList.add("show");
+        parentLi.classList.add("open");
+        menu.classList.remove("collapsed");
+        localStorage.setItem("menu-he-thong-open", "true");
+      }
+    });
+  });
+</script>
 
         
