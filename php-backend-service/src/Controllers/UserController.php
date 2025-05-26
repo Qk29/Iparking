@@ -52,7 +52,7 @@ class UserController {
 
         User::createUser($idUser,$username, $password, $name, $isAdmin, $isActive, $isDeteled);
 
-        var_dump($roles);
+        
         foreach($roles as $roleId){
             $idRole = uniqid('role_');
             User::assignRoleToUser($idRole,$idUser, $roleId);

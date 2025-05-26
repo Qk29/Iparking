@@ -24,8 +24,6 @@
             'roles' => $roles,
         ];
 
-        var_dump($data);
-
         // Gửi yêu cầu POST đến API
         $response = apiRequest('POST', $apiUrl, $data);
         

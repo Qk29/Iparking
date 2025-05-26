@@ -21,6 +21,7 @@ $routes = [
     // Danh mục
     'card-category' => 'pages/dashboard/category/card-category.php',
     'add-card-category' => 'pages/dashboard/category/add-card.php',
+    'update-card-group' => 'pages/dashboard/category/update-card-cate.php',
 ];
 $page = $_GET['page'] ?? 'dashboard';   
 

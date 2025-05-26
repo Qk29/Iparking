@@ -1,20 +1,26 @@
 <?php 
     include_once __DIR__ . '/../../../api/request.php';
 
-    // call api get-lane
+    // call api findCardGroup
+    $CardGroupID = $_GET['id'] ?? null;
+    $apiUrlCardCategory = 'http://localhost:8000/api/category/find-card-category/'. $CardGroupID;
+    $responseCardCategory = apiRequest('GET', $apiUrlCardCategory);
+    $cardCategory = json_decode($responseCardCategory, true);
+    $cardCategory = $cardCategory['data'] ?? null; // lấy dữ liệu ở "data"
+ 
+
+    // call api getVehicleGroup
+    $getVehicleGroupUrl  = 'http://localhost:8000/api/vehicle-group/get-all';
+    $vehicleGroupResponse  = apiRequest('GET', $getVehicleGroupUrl );
+    $vehicleGroups  = json_decode($vehicleGroupResponse, true);
+
+    // call api getLane
     $getLanesUrl  = 'http://localhost:8000/api/lane/get-all';
     $laneResponse  = apiRequest('GET', $getLanesUrl );
     $lanes  = json_decode($laneResponse, true);
     
-    //call api get-vehicle-group
-    $getVehicleGroupUrl  = 'http://localhost:8000/api/vehicle-group/get-all';
-    
-    $vehicleGroupResponse  = apiRequest('GET', $getVehicleGroupUrl );
-    $vehicleGroups  = json_decode($vehicleGroupResponse, true);
-   
 
-    $addCardGroupUrl = 'http://localhost:8000/api/category/add-card-group';
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
         $data = [
             'CardGroupName' => $_POST['CardGroupName'],
             'Description' => $_POST['Description'],
@@ -53,26 +59,21 @@
             'Costs' => $_POST['Costs'] ?? '0'
         ];
 
-        var_dump($data);
-;
-        // Gửi yêu cầu POST đến API
-        $response = apiRequest('POST', $addCardGroupUrl, $data);
-        if (empty($response)) {
-            echo "API trả về response rỗng";
+        $apiUrlUpdateCardCategory = 'http://localhost:8000/api/category/update-card-category/' . $CardGroupID;
+        $responseUpdateCardCategory = apiRequest('PUT', $apiUrlUpdateCardCategory, $data);
+        $responseData = json_decode($responseUpdateCardCategory, true);
+        if ($responseData['success'] === true) {
+            // Cập nhật thành công, chuyển hướng hoặc hiển thị thông báo
+            echo "<script>
+                    alert('Cập nhật nhóm thẻ thành công');
+                    window.location.href = 'index.php?page=card-category';
+                </script>";
+    exit;
+            exit;
         } else {
-            echo "Response từ API: " . htmlspecialchars($response);
-        }
-
-        var_dump($response);
-        // Kiểm tra phản hồi từ API
-
-        
-        // Xử lý phản hồi từ API
-        $responseData = json_decode($response, true);
-        if ($responseData && isset($responseData['success']) && $responseData['success'] == true) {
-            echo "<script>alert('Tạo mới nhóm thẻ thành công!');</script>";
-        } else { 
-            echo "<script>alert('Có lỗi: " . $responseData['message'] . "');</script>";
+            // Xử lý lỗi nếu có
+            $errorMessage = $responseData['message'] ?? 'Cập nhật không thành công';
+            echo "<script>alert('$errorMessage');</script>";
         }
     }
 ?>
@@ -82,7 +83,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Tạo mới người dùng</title>
+  <title>Cập nhật người dùng</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
@@ -102,19 +103,19 @@
 </head>
 <body>
 <div class="container mt-5">
-  <h4 class="mb-4">Thêm mới nhóm thẻ</h4>
+  <h4 class="mb-4">Cập nhật nhóm thẻ</h4>
   <form method="POST">
     <div class="row">
       <!-- Thông tin cơ bản -->
       <div class="col-md-10 form-section">
         <div class="form-group">
           <label class="form-label">Tên nhóm thẻ <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" name="CardGroupName" placeholder="Tên nhóm thẻ">
+          <input type="text" class="form-control" name="CardGroupName"  value="<?= $cardCategory['CardGroupName'] ?>">
         </div>
 
         <div class="form-group">
           <label class="form-label">Mô tả <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" name="Description" placeholder="Mô tả nhóm thẻ">
+          <input type="text" class="form-control" name="Description" value="<?= $cardCategory['Description'] ?>">
         </div>
         <div class="form-group">
             <input type="hidden" name="TimePeriods" value="00:00-00:00-00:00-00:00-00:00">
@@ -124,10 +125,21 @@
         <div class="form-group row">      
             <label class="form-label">Loại thẻ <span class="text-danger">*</span></label>  
             <select class="form-control col-md-5 ml-3"  name="CardType" id="CardType">
-                <option value="0">Thuê bao</option>
-                <option value="1">Vé lượt</option>
-                <option value="2">Vé miễn phí</option>
-                <option value="3">Vé vip</option>
+                
+                    <?php 
+                        $types = [
+                            0 => 'Thuê bao',
+                            1 => 'Vé lượt',
+                            2 => 'Vé miễn phí',
+                            3 => 'Vé Vip'
+                        ];
+                        foreach($types as $key => $value){
+                            $selected = ($key == $cardCategory['CardType']) ? 'selected' : '';
+                            echo "<option value='$key' $selected>$value</option>";
+                        }
+                    ?>
+                
+                
             </select>
             <div class="col-md-5">
                 <input type="checkbox" class="" name="IsHaveMoneyExcessTime" id="IsHaveMoneyExcessTime" value="true">
@@ -141,7 +153,7 @@
             <label class="form-label">Nhóm xe <span class="text-danger">*</span></label>  
             <select class="form-control"  name="VehicleGroupID" id="VehicleGroupID">
             <?php foreach($vehicleGroups as $vehicleGroup): ?>
-                <option value="<?= $vehicleGroup['VehicleGroupID'] ?>"><?= $vehicleGroup['VehicleGroupName'] ?></option>  
+                <option value="<?= $vehicleGroup['VehicleGroupID'] ?>" <?= $cardCategory['VehicleGroupID'] == $vehicleGroup['VehicleGroupID'] ? 'selected' : ''  ?> ><?= $vehicleGroup['VehicleGroupName'] ?></option>  
             <?php endforeach; ?>  
             
         </select>
@@ -165,11 +177,7 @@
                     </button>
                 </div>
 
-                <select multiple class="form-control" id="nonselected" size="8">
-                    <?php foreach($lanes as $lane): ?>
-                        <option value="<?= $lane['LaneID'] ?>"><?= $lane['LaneName'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <select multiple class="form-control" id="nonselected" size="8"></select>
             </div>
 
             <!-- Spacer -->
@@ -192,7 +200,9 @@
                 </div>
 
                 <select multiple class="form-control" id="selected" size="8">
-                    
+                    <?php foreach($lanes as $lane): ?>
+                        <option value="<?= $lane['LaneID'] ?>" <?= $lane['LaneID'] == $cardCategory['LaneIDs'] ? 'selected' : '' ?> ><?= $lane['LaneName'] ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -208,7 +218,7 @@
     <label class="col-form-label form-label col-md-2">Thời gian hoạt động<span class="text-danger">*</span></label>
     <div class="col-md-3">
         <div class="input-group bootstrap-timepicker">
-        <input type="text" class="form-control timepicker valid" name="ValidTimeStart" value="00:00">
+        <input type="text" class="form-control timepicker valid" name="ValidTimeStart" value="<?= $cardCategory['ValidTimeStart'] ?>">
         <div class="input-group-append">
             <span class="input-group-text"><i class="fas fa-clock"></i></span>
         </div>
@@ -217,7 +227,7 @@
     <label class="col-form-label col-md-1 text-center">đến</label>
     <div class="col-md-3">
         <div class="input-group bootstrap-timepicker">
-        <input type="text" class="form-control timepicker valid" name="ValidTimeEnd" value="23:59">
+        <input type="text" class="form-control timepicker valid" name="ValidTimeEnd" value="<?= $cardCategory['ValidTimeEnd'] ?>">
         <div class="input-group-append">
             <span class="input-group-text"><i class="fas fa-clock"></i></span>
         </div>
@@ -226,12 +236,12 @@
 
     <div class="form-group row mt-5">
         <div class="col-md-5">
-        <input type="checkbox" name="EnableFree" id="EnableFree">
+        <input type="checkbox" name="EnableFree" id="EnableFree" value="<?= $cardCategory['EnableFree'] ?>" >
         <span for=""> Miễn phí trong khoảng thời gian</span>
         </div>
 
         <div class="col-md-5">
-        <input type="text" class="form-control" name="FreeTime" id="FreeTime" value="0">
+        <input type="text" class="form-control" name="FreeTime" id="FreeTime" value="<?= $cardCategory['FreeTime'] ?>">
         </div>
     </div>
 
@@ -239,7 +249,7 @@
     <label class="col-form-label form-label col-md-2">TG ban ngày(TG hợp lệ thẻ thuê bao)<span class="text-danger">*</span> </label>
     <div class="col-md-3">
         <div class="input-group bootstrap-timepicker">
-        <input type="text" class="form-control timepicker valid" name="DayTimeFrom" value="00:00">
+        <input type="text" class="form-control timepicker valid" name="DayTimeFrom" value="<?= $cardCategory['DayTimeFrom'] ?>">
         <div class="input-group-append">
             <span class="input-group-text"><i class="fas fa-clock"></i></span>
         </div>
@@ -248,7 +258,7 @@
     <label class="col-form-label col-md-1 text-center">đến</label>
     <div class="col-md-3 ">
         <div class="input-group bootstrap-timepicker">
-        <input type="text" class="form-control timepicker valid" name="DayTimeTo" value="23:59">
+        <input type="text" class="form-control timepicker valid" name="DayTimeTo" value="<?= $cardCategory['DayTimeTo'] ?>">
         <div class="input-group-append">
             <span class="input-group-text"><i class="fas fa-clock"></i></span>
         </div>
@@ -259,38 +269,51 @@
     <div class="form-group mt-3">
         <label class="form-label" for="">Tính phí theo<span class="text-danger">*</span></label>
         <select name="Formulation" id="Formulation" class="form-control" onchange="OpenFormulationBox()">
-            <option value="0">Lượt</option>
-            <option value="1">Block</option>
-            <option value="2">Khoảng thời gian</option>
+            
+
+            <?php 
+                        $formulations = [
+                            0 => 'Lượt',
+                            1 => 'Block',
+                            2 => 'Khoảng thời gian',
+                          
+                        ];
+                        foreach($formulations as $key => $value){
+                            $selected = ($key == $cardCategory['Formulation']) ? 'selected' : '';
+                            echo "<option value='$key' $selected>$value</option>";
+                        }
+
+                        
+            ?>
         </select>
         <div id="blockSection" class="row mt-3" style="display: none;">
         <div class="col-md-6">
             <label>Block 0</label>
-            <input type="text" name="Block0" class="form-control" value="0">
+            <input type="text" name="Block0" class="form-control" value="<?= $cardCategory['Block0'] ?>">
             <label>Block 1</label>
-            <input type="text" name="Block1" class="form-control" value="0">
+            <input type="text" name="Block1" class="form-control" value="<?= $cardCategory['Block1'] ?>">
             <label>Block 2</label>
-            <input type="text" name="Block2" class="form-control" value="0">
+            <input type="text" name="Block2" class="form-control" value="<?= $cardCategory['Block2'] ?>">
             <label>Block 3</label>
-            <input type="text" name="Block3" class="form-control" value="0">
+            <input type="text" name="Block3" class="form-control" value="<?= $cardCategory['Block3'] ?>">
             <label>Block 4</label>
-            <input type="text" name="Block4" class="form-control" value="0">
+            <input type="text" name="Block4" class="form-control" value="<?= $cardCategory['Block4'] ?>">
             <label>Block 5</label>
-            <input type="text" name="Block5" class="form-control" value="0">
+            <input type="text" name="Block5" class="form-control" value="<?= $cardCategory['Block5'] ?>">
         </div>
         <div class="col-md-6">
             <label>Thời gian (phút)</label>
-            <input type="text" name="Time0" class="form-control" value="0">
+            <input type="text" name="Time0" class="form-control" value="<?= $cardCategory['Time0'] ?>">
             <label>Thời gian (phút)</label>
-            <input type="text" name="Time1" class="form-control" value="0">
+            <input type="text" name="Time1" class="form-control" value="<?= $cardCategory['Time1'] ?>">
             <label>Thời gian (phút)</label>
-            <input type="text" name="Time2" class="form-control" value="0">
+            <input type="text" name="Time2" class="form-control" value="<?= $cardCategory['Time2'] ?>">
             <label>Thời gian (phút)</label>
-            <input type="text" name="Time3" class="form-control" value="0">
+            <input type="text" name="Time3" class="form-control" value="<?= $cardCategory['Time3'] ?>">
             <label>Thời gian (phút)</label>
-            <input type="text" name="Time4" class="form-control" value="0">
+            <input type="text" name="Time4" class="form-control" value="<?= $cardCategory['Time4'] ?>">
             <label>Thời gian (phút)</label>
-            <input type="text" name="Time5" class="form-control" value="0">
+            <input type="text" name="Time5" class="form-control" value="<?= $cardCategory['Time5'] ?>">
         </div>
 </div>
     </div>
@@ -301,54 +324,54 @@
     </div>
 
     <div class="form-group mt-3" id="FeeHidden">
-        <input type="hidden" id="EachFeeHidden" name="EachFeeHidden" value="0" class="form-control" placeholder="Nhập phí lượt">
+        <input type="hidden" id="EachFeeHidden" name="EachFeeHidden" value="<?= $cardCategory['EachFee'] ?>" class="form-control" placeholder="Nhập phí lượt">
     </div>
 
     <div class="form-group mt-3">
         <label class="form-label" for="">STT<span class="text-danger">*</span></label>
-        <input type="text" id="SortOrder" name="SortOrder" class="form-control" placeholder="">
+        <input type="text" id="SortOrder" name="SortOrder" class="form-control" value="<?= $cardCategory['SortOrder'] ?>">
     </div>
 
     <div class="form-group row mt-3">
         <div class="col-md-5">
         <label class="form-label" for="">Số lượng xe giới hạn<span class="text-danger">*</span></label>
-        <input type="number" id="RestrictedNumber" name="RestrictedNumber" class="form-control">
+        <input type="number" id="RestrictedNumber" name="RestrictedNumber" class="form-control" value="<?= $cardCategory['RestrictedNumber'] ?>">
         </div>
     </div>
 
-    <div class="form-group row mt-3">
-        <div class="col-md-5">
-        <input type="checkbox" name="IsCheckPlate" id="IsCheckPlate">
-        <span for=""> Kiểm tra biển số xe</span>
+        <div class="form-group row mt-3">
+            <div class="col-md-5">
+            <input type="checkbox" name="IsCheckPlate" id="IsCheckPlate" <?= $cardCategory['IsCheckPlate'] == 1 ? 'checked' : ''  ?>>
+            <span for=""> Kiểm tra biển số xe</span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row mt-3">
-        <div class="col-md-5">
-        <input type="checkbox" name="IsHaveMoneyExpiredDate" id="IsHaveMoneyExpiredDate">
-        <span for=""> Tính tiền thuê bao ngừng sử dụng</span>
+        <div class="form-group row mt-3">
+            <div class="col-md-5">
+            <input type="checkbox" name="IsHaveMoneyExpiredDate" id="IsHaveMoneyExpiredDate" <?= $cardCategory['IsHaveMoneyExpiredDate'] == 1 ? 'checked' : ''  ?>>
+            <span for=""> Tính tiền thuê bao ngừng sử dụng</span>
+            </div>
         </div>
-    </div>
-    <div class="form-group row mt-3">
-        <div class="col-md-5">
-        <input type="checkbox" name="Inactive" id="Inactive">
-        <span for=""> Ngừng sử dụng</span>
+        <div class="form-group row mt-3">
+            <div class="col-md-5">
+            <input type="checkbox" name="Inactive" id="Inactive" v<?= $cardCategory['Inactive'] == 1 ? 'checked' : ''  ?>>
+            <span for=""> Ngừng sử dụng</span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row mt-3">
-        <div class="col-md-5">
-        <input type="checkbox" name="IsSpecialGroup" id="IsSpecialGroup">
-        <span for=""> Sử dụng mái che</span>
+        <div class="form-group row mt-3">
+            <div class="col-md-5">
+            <input type="checkbox" name="IsSpecialGroup" id="IsSpecialGroup" <?= $cardCategory['IsSpecialGroup'] == 1 ? 'checked' : ''  ?>>
+            <span for=""> Sử dụng mái che</span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row mt-3">
-        <div class="col-md-5">
-        <input type="checkbox" name="isLockingCharge" id="isLockingCharge">
-        <span for=""> Tính tiền gửi xe với thẻ bị khoá</span>
+        <div class="form-group row mt-3">
+            <div class="col-md-5">
+            <input type="checkbox" name="isLockingCharge" id="isLockingCharge" <?= $cardCategory['isLockingCharge'] == 1 ? 'checked' : ''  ?>>
+            <span for=""> Tính tiền gửi xe với thẻ bị khoá</span>
+            </div>
         </div>
-    </div>
 
     </div>
 
@@ -430,6 +453,10 @@ $(document).ready(function () {
 });
 
 // Mở hoặc đóng phần tử dựa trên giá trị của Formulation
+
+    // Gọi hàm OpenFormulationBox khi trang được tải
+    OpenFormulationBox();
+
     function OpenFormulationBox(){
         var selectedValue = document.getElementById("Formulation").value;
         var blockSection = document.getElementById("blockSection");
