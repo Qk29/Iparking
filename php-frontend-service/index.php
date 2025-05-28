@@ -18,10 +18,23 @@ $routes = [
     'add-user' => 'pages/dashboard/system/add-user.php',
     'update-user-system' => 'pages/dashboard/system/update-user-system.php',
 
-    // Danh mục
-    'card-category' => 'pages/dashboard/category/card-category.php',
-    'add-card-category' => 'pages/dashboard/category/add-card.php',
-    'update-card-group' => 'pages/dashboard/category/update-card-cate.php',
+    // Danh mục/ nhóm thẻ
+    'card-category' => 'pages/dashboard/category/cardgroup/card-category.php',
+    'add-card-category' => 'pages/dashboard/category/cardgroup/add-card.php',
+    'update-card-group' => 'pages/dashboard/category/cardgroup/update-card-cate.php',
+
+    // Danh mục/ nhóm căn hộ
+    'apartment-group' => 'pages/dashboard/category/apartment-group/apartment-category.php',
+    'add-apartment-category' => 'pages/dashboard/category/apartment-group/add-apartment-category.php',
+    'update-apartment-category' => 'pages/dashboard/category/apartment-group/update-apartment-category.php',
+
+    // Danh mục/ nhóm khách hàng
+    'customer-group' => 'pages/dashboard/category/customer-group/customer-group.php',
+    'add-customer-group' => 'pages/dashboard/category/customer-group/add-customer-group.php',
+    'update-customer-group' => 'pages/dashboard/category/customer-group/update-customer-group.php',
+    
+
+    
 ];
 $page = $_GET['page'] ?? 'dashboard';   
 

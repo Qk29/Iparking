@@ -469,7 +469,7 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="index.php?page=user-system" class="nav-link">
+                        <a href="index.php?page=apartment-group" class="nav-link">
                           <span class="menu-text">
                             <i class="fas fa-caret-right mr-1 "></i>
                				  <span>Nhóm căn hộ</span>
@@ -478,7 +478,7 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="index.php?page=user-system" class="nav-link">
+                        <a href="index.php?page=customer-group" class="nav-link">
                           <span class="menu-text">
                           <i class="fas fa-caret-right mr-1 "></i>
 
@@ -503,7 +503,7 @@
 
                 <li class="nav-item">
 
-                  <a href="" class="nav-link dropdown-toggle collapsed" id="menu-he-thong">
+                  <a href="#" class="nav-link dropdown-toggle collapsed" id="menu-he-thong">
                     <i class="nav-icon far fa fa-cog"></i>
                     <span class="nav-text fadeable">
                	  <span>Hệ thống</span>
@@ -580,11 +580,15 @@
     const submenu = parentLi.querySelector(".submenu");
 
     // Mở menu nếu trước đó đã mở
-    const menuState = localStorage.getItem("menu-he-thong-open");
-    if (menuState === "true") {
+    const menuState = localStorage.getItem("menu-he-thong-open") === "true";
+    if (menuState) {
       submenu.classList.add("show");
       menu.classList.remove("collapsed");
       parentLi.classList.add("open");
+    }else {
+      submenu.classList.remove("show");
+      menu.classList.add("collapsed");
+      parentLi.classList.remove("open");
     }
 
     // Khi click vào menu chính, lưu trạng thái

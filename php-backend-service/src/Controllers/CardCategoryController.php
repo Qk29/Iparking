@@ -18,7 +18,7 @@
         {
             $params = (array) $request->getParsedBody();
 
-            error_log("Params received: " . print_r($params, true));
+           
             
             $CardGroupName = $params['CardGroupName'] ?? '';
             $Description = $params['Description'] ?? 'chưa có mô tả';
@@ -68,7 +68,7 @@
                 $response->getBody()->write(json_encode(['success' => true, 'message' => 'Tạo nhóm thẻ thành công']));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
             } catch (\Exception $e) {
-               error_log("Error in createCardCategory: " . $e->getMessage());
+            //    error_log("Error in createCardCategory: " . $e->getMessage());
                 $response->getBody()->write(json_encode(['success' => false, 'message' => 'Lỗi khi tạo danh mục thẻ: ' . $e->getMessage()]));
                 return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
             }
@@ -142,7 +142,7 @@
             $DayTimeFrom = $params['DayTimeFrom'] ?? '00:00';
             $DayTimeTo = $params['DayTimeTo'] ?? '23:59';
             $EachFee = $params['EachFee'] ?? 0;
-            $SortOrder = $params['SortOrder'] ?? 0;
+            $SortOrder = $params['SortOrder'] ?? 0; 
             $RestrictedNumber = $params['RestrictedNumber'] ?? 0;
             $IsCheckPlate = $params['IsCheckPlate'] ?? 0;
             $IsHaveMoneyExpiredDate = $params['IsHaveMoneyExpiredDate'] ?? 0;
