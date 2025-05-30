@@ -59,6 +59,17 @@ $app->group('/api', function (RouteCollectorProxy $group) {
 
     })->add(new \App\Middleware\AuthMiddleware());
 
+    // route equipment
+    $group->group('/equipment', function (RouteCollectorProxy $equipmentGroup) {
+        // route gate
+        $equipmentGroup->get('/gate-list', \App\Controllers\GateController::class . ':index');
+        $equipmentGroup->post('/add-gate', \App\Controllers\GateController::class . ':create');
+        $equipmentGroup->get('/find-gate/{id}', \App\Controllers\GateController::class . ':findGate');
+        $equipmentGroup->put('/update-gate/{id}', \App\Controllers\GateController::class . ':update');
+        $equipmentGroup->put('/delete-gate/{id}', \App\Controllers\GateController::class . ':delete');
+    
+    })->add(new \App\Middleware\AuthMiddleware());
+
     // route lane
     $group->group('/lane', function (RouteCollectorProxy $laneGroup) {
         $laneGroup->get('/get-all', \App\Controllers\LaneController::class . ':index'); 

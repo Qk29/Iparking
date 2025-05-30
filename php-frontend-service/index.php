@@ -32,6 +32,12 @@ $routes = [
     'customer-group' => 'pages/dashboard/category/customer-group/customer-group.php',
     'add-customer-group' => 'pages/dashboard/category/customer-group/add-customer-group.php',
     'update-customer-group' => 'pages/dashboard/category/customer-group/update-customer-group.php',
+
+    // Thiết bị/ Cổng
+    'gate' => 'pages/dashboard/device/gate/gate-list.php',
+    'add-gate' => 'pages/dashboard/device/gate/add-gate.php',
+    'update-gate' => 'pages/dashboard/device/gate/update-gate.php',
+
     
 
     

@@ -127,19 +127,19 @@
         <td><?= $user['RoleName']?></td>
         <td class="action-icons">
             <!-- Sửa -->
-            <a href="index.php?page=update-user-system" title="Sửa">
+            <a href="index.php?page=update-user-system" title="Sửa" class="d-inline-block me-2">
                 <i class="ace-icon fa fa-pencil bigger-120" style="color:green;"></i>
             </a>
 
             <!-- Xóa -->
-            <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
+            <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');" class="d-inline-block me-2">
             <input type="hidden" name="delete_id" value="<?= $user['Id'] ?>">
             <button type="submit" class="btnDelete" title="Xóa" style="border:none; background:none; cursor:pointer;">
                 <i class="ace-icon fa fa-trash bigger-120" style="color:red;"></i>
             </button>
             </form>
             <!-- Phục hồi -->
-            <a href="#" class="btnRes" title="Phục hồi">
+            <a href="#" class="btnRes" title="Phục hồi" class="d-inline-block me-2">
                 <i class="ace-icon fa fa-recycle bigger-120" style="color:orange;"></i>
             </a>
         </td>

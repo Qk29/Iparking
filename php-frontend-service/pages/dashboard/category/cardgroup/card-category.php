@@ -74,12 +74,12 @@
             </td>
             <td class="action-icons">
                 <!-- Sửa -->
-                <a href="index.php?page=update-card-group&id=<?=$cardCategory['CardGroupID'] ?>" title="Sửa">
+                <a href="index.php?page=update-card-group&id=<?=$cardCategory['CardGroupID'] ?>" title="Sửa" class="d-inline-block me-2">
                     <i class="ace-icon fa fa-pencil bigger-120" style="color:green;"></i>
                 </a>
 
                 <!-- Xóa -->
-                <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
+                <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');" class="d-inline-block me-2">
                 <input type="hidden" name="delete_card_id" value="<?= $cardCategory['CardGroupID'] ?>">
                 <button type="submit" class="btnDelete" title="Xóa" style="border:none; background:none; cursor:pointer;">
                     <i class="ace-icon fa fa-trash bigger-120" style="color:red;"></i>

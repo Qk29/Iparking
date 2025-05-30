@@ -79,7 +79,7 @@
 
                 <li class="nav-item">
 
-                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed" id="menu-bao-cao">
                     <i class="nav-icon fa fa-chart-line"></i>
                     <span class="nav-text fadeable">
                	  <span>Báo cáo</span>
@@ -197,7 +197,7 @@
 
                 <li class="nav-item">
 
-                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed" id="menu-bieu-do">
                     <i class="nav-icon fa fa-chart-pie"></i>
                     <span class="nav-text fadeable">
                	  <span>Biểu đồ</span>
@@ -274,7 +274,7 @@
 
                 <li class="nav-item">
 
-                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed" id="menu-quan-ly-the">
                     <i class="nav-icon fa fa-id-card"></i>
                     <span class="nav-text fadeable">
                	  <span>Quản lí thẻ</span>
@@ -347,7 +347,7 @@
 
                 <li class="nav-item">
 
-                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed" id="menu-quan-ly-khach-hang">
                     <i class="nav-icon fa fa-users"></i>
                     <span class="nav-text fadeable">
                	  <span>Quản lý khách hàng</span>
@@ -448,7 +448,7 @@
 
 
                 <li class="nav-item">
-                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
+                  <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed" id="menu-danh-muc">
                     <i class="nav-icon far fa fa-folder-open"></i>
                     <span class="nav-text fadeable">
                	  <span>Danh Mục</span>
@@ -492,12 +492,72 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="html/calendar.html" class="nav-link dropdown-toggle collapsed">
+                  <a href="html/calendar.html" class="nav-link dropdown-toggle collapsed" id="menu-cai-dat-thiet-bi">
                     <i class="nav-icon far fa fa-desktop"></i>
                     <span class="nav-text fadeable">
                	  <span>Cài đặt thiết bị</span>
                   <b class="caret fa fa-angle-left rt-n90"></b>
                   </a>
+
+                  <div class="hideable submenu collapse">
+                    <ul class="submenu-inner">
+
+                      <li class="nav-item">
+                        <a href="index.php?page=gate" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>Cổng</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="index.php?page=card-category" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>Máy tính</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="index.php?page=card-category" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>Cameras</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="index.php?page=card-category" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>Bộ điều khiển</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="index.php?page=card-category" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>Làn vào/ra</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="index.php?page=card-category" class="nav-link">
+                          <span class="menu-text">
+                            <i class="fas fa-caret-right mr-1 "></i>
+               				  <span>LED hiển thị</span>
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                      
                 </li>
 
 
@@ -573,43 +633,6 @@
         </div>
 
         <!-- Js -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const menu = document.getElementById("menu-he-thong");
-    const parentLi = menu.closest(".nav-item");
-    const submenu = parentLi.querySelector(".submenu");
 
-    // Mở menu nếu trước đó đã mở
-    const menuState = localStorage.getItem("menu-he-thong-open") === "true";
-    if (menuState) {
-      submenu.classList.add("show");
-      menu.classList.remove("collapsed");
-      parentLi.classList.add("open");
-    }else {
-      submenu.classList.remove("show");
-      menu.classList.add("collapsed");
-      parentLi.classList.remove("open");
-    }
-
-    // Khi click vào menu chính, lưu trạng thái
-    menu.addEventListener("click", function (e) {
-      e.preventDefault(); // Ngăn reload nếu có href=""
-
-      const isOpen = submenu.classList.contains("show");
-
-      if (isOpen) {
-        submenu.classList.remove("show");
-        parentLi.classList.remove("open");
-        menu.classList.add("collapsed");
-        localStorage.setItem("menu-he-thong-open", "false");
-      } else {
-        submenu.classList.add("show");
-        parentLi.classList.add("open");
-        menu.classList.remove("collapsed");
-        localStorage.setItem("menu-he-thong-open", "true");
-      }
-    });
-  });
-</script>
 
         

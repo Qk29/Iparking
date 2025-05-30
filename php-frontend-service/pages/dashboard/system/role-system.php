@@ -50,12 +50,12 @@
             </td>
           <td class="action-icons">
             <!-- Sửa -->
-            <a href="#" title="Sửa">
+            <a href="#" title="Sửa" class="d-inline-block me-2">
                 <i class="ace-icon fa fa-pencil bigger-120" style="color:green;"></i>
             </a>
 
             <!-- Xóa -->
-            <a href="#" class="btnDelete" title="Xóa">
+            <a href="#" class="btnDelete" title="Xóa" class="d-inline-block me-2">
                 <i class="ace-icon fa fa-trash bigger-120" style="color:red;"></i>
             </a>
 
