@@ -44,7 +44,10 @@ $routes = [
     'update-computer' => 'pages/dashboard/device/computer/update-computer.php',
     
 
-    
+    // Thiết bị/ camera
+    'camera' => 'pages/dashboard/device/camera/camera-list.php',
+    'add-camera' => 'pages/dashboard/device/camera/add-camera.php',
+    'update-camera' => 'pages/dashboard/device/camera/update-camera.php',
 ];
 $page = $_GET['page'] ?? 'dashboard';   
 
