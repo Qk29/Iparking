@@ -15,9 +15,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
     public function create(Request $request, Response $response, $args) {
         $data = $request->getParsedBody();
         // 
-        // if(empty($data['ComputerName']) || empty($data['IPAddress']) || empty($data['GateID'])) {
-        //     $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'ComputerName, IPAddress, and GateID are required']));
-        //     return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+       
             
         // }
         $result = Computer::createComputer($data);
