@@ -67,6 +67,14 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $equipmentGroup->get('/find-gate/{id}', \App\Controllers\GateController::class . ':findGate');
         $equipmentGroup->put('/update-gate/{id}', \App\Controllers\GateController::class . ':update');
         $equipmentGroup->put('/delete-gate/{id}', \App\Controllers\GateController::class . ':delete');
+
+
+        // route computer
+        $equipmentGroup->get('/computer-list', \App\Controllers\ComputerController::class . ':index');
+        $equipmentGroup->post('/add-computer', \App\Controllers\ComputerController::class . ':create');
+        $equipmentGroup->get('/find-computer/{id}', \App\Controllers\ComputerController::class . ':findComputer');
+        $equipmentGroup->put('/update-computer/{id}', \App\Controllers\ComputerController::class . ':update');
+        $equipmentGroup->put('/delete-computer/{id}', \App\Controllers\ComputerController::class . ':delete');
     
     })->add(new \App\Middleware\AuthMiddleware());
 

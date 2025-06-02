@@ -38,6 +38,10 @@ $routes = [
     'add-gate' => 'pages/dashboard/device/gate/add-gate.php',
     'update-gate' => 'pages/dashboard/device/gate/update-gate.php',
 
+    // Thiết bị/ máy tính
+    'computer' => 'pages/dashboard/device/computer/computer-list.php',
+    'add-computer'=> 'pages/dashboard/device/computer/add-computer.php',
+    'update-computer' => 'pages/dashboard/device/computer/update-computer.php',
     
 
     
