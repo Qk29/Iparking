@@ -82,6 +82,16 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $equipmentGroup->get('/find-camera/{id}', \App\Controllers\CameraController::class . ':findCamera');
         $equipmentGroup->put('/update-camera/{id}', \App\Controllers\CameraController::class . ':update');
         $equipmentGroup->put('/delete-camera/{id}', \App\Controllers\CameraController::class . ':delete');
+
+
+        // route controller
+        $equipmentGroup->get('/controller-list', \App\Controllers\ControllerController::class . ':index');
+        $equipmentGroup->post('/add-controller', \App\Controllers\ControllerController::class . ':create');
+        $equipmentGroup->get('/find-controller/{id}', \App\Controllers\ControllerController::class . ':findController');
+        $equipmentGroup->put('/update-controller/{id}', \App\Controllers\ControllerController::class . ':update');
+        $equipmentGroup->put('/delete-controller/{id}', \App\Controllers\ControllerController::class . ':delete');
+
+
     
     })->add(new \App\Middleware\AuthMiddleware());
 

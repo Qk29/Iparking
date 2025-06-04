@@ -48,6 +48,11 @@ $routes = [
     'camera' => 'pages/dashboard/device/camera/camera-list.php',
     'add-camera' => 'pages/dashboard/device/camera/add-camera.php',
     'update-camera' => 'pages/dashboard/device/camera/update-camera.php',
+
+    // thiết bị / bộ điều khiển
+    'controller' => 'pages/dashboard/device/controller/controller-list.php',
+    'add-controller' => 'pages/dashboard/device/controller/add-controller.php',
+    'update-controller' =>'pages/dashboard/device/controller/update-controller.php'
 ];
 $page = $_GET['page'] ?? 'dashboard';   
 

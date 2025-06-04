@@ -1,0 +1,1 @@
+{"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMjExOTkiLCJVc2VybmFtZSI6ImFkbWlucWsiLCJpYXQiOjE3NDkwMDAxNDMsImV4cCI6MTc0OTAwMzc0M30.lAMojjyp_-ie_S63w5usHIvb_LvaaVs1Hu6KqQP-FHg","user":{"Id":"221199","Username":"adminqk","Name":"Qu\u1ea3n tr\u1ecb vi\u00ean 2","Email":"qkbn2001@gmail.com","Phone":"0394841229"}}

@@ -42,7 +42,7 @@
 ?>
 
 <div class="container mt-5">
-  <h2 class="mb-4">Cập nhật máy tính</h2>
+  <h2 class="mb-4">Thêm mới máy tính</h2>
   <form method="POST">
     
       <!-- Thông tin cơ bản -->

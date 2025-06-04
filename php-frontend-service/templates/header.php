@@ -1,4 +1,10 @@
+<?php  // Phải bắt đầu ngay từ dòng đầu tiên, không có khoảng trắng trước
+// Kiểm tra session và xử lý redirect ở đây nếu cần
 
+
+// Thiết lập các header cần thiết trước khi có output
+header('Content-Type: text/html; charset=utf-8');
+?>
 <!doctype html>
 <html lang="en">
 

@@ -530,7 +530,7 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="index.php?page=card-category" class="nav-link">
+                        <a href="index.php?page=controller" class="nav-link">
                           <span class="menu-text">
                             <i class="fas fa-caret-right mr-1 "></i>
                				  <span>Bộ điều khiển</span>
