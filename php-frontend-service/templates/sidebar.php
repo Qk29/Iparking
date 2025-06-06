@@ -1,4 +1,4 @@
-    <div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-light">
+<div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-light">
           <div class="sidebar-inner">
 
             <div class="ace-scroll flex-grow-1" data-ace-scroll="{}">
@@ -548,7 +548,7 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="index.php?page=card-category" class="nav-link">
+                        <a href="index.php?page=led-display" class="nav-link">
                           <span class="menu-text">
                             <i class="fas fa-caret-right mr-1 "></i>
                				  <span>LED hiển thị</span>

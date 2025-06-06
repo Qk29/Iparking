@@ -52,7 +52,18 @@ $routes = [
     // thiết bị / bộ điều khiển
     'controller' => 'pages/dashboard/device/controller/controller-list.php',
     'add-controller' => 'pages/dashboard/device/controller/add-controller.php',
-    'update-controller' =>'pages/dashboard/device/controller/update-controller.php'
+    'update-controller' =>'pages/dashboard/device/controller/update-controller.php',
+
+
+    //thiết bị / led hiển thị
+    'led-display' => 'pages/dashboard/device/led/led-list.php',
+    'add-led' => 'pages/dashboard/device/led/add-led.php',
+    'update-led' => 'pages/dashboard/device/led/update-led.php',
+    'export-led' => 'pages/dashboard/device/led/export-led.php',
+
+
+
+    
 ];
 $page = $_GET['page'] ?? 'dashboard';   
 

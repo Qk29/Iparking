@@ -29,7 +29,7 @@
             // Optionally redirect or reload the page
            
             echo '<div class="alert alert-success">Thêm mới bộ điều khiển thành công!</div>';
-            exit;
+            
         } else {
             echo '<div class="alert alert-danger">Lỗi khi thêm mới bộ điều khiển: ' . htmlspecialchars($responseData['message'] ?? 'Không rõ lỗi') . '</div>';
         }

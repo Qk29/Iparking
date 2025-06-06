@@ -92,6 +92,15 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $equipmentGroup->put('/delete-controller/{id}', \App\Controllers\ControllerController::class . ':delete');
 
 
+        // route led display
+        $equipmentGroup->get('/led-list', \App\Controllers\LedController::class . ':index');
+        $equipmentGroup->post('/add-led', \App\Controllers\LedController::class . ':create');
+        $equipmentGroup->get('/find-led/{id}', \App\Controllers\LedController::class . ':findLed');
+        $equipmentGroup->put('/update-led/{id}', \App\Controllers\LedController::class . ':update');
+        $equipmentGroup->put('/delete-led/{id}', \App\Controllers\LedController::class . ':delete');
+
+
+
     
     })->add(new \App\Middleware\AuthMiddleware());
 
