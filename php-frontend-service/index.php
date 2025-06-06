@@ -61,6 +61,11 @@ $routes = [
     'update-led' => 'pages/dashboard/device/led/update-led.php',
     'export-led' => 'pages/dashboard/device/led/export-led.php',
 
+    // thiết bị/ làn vào ra
+    'in-out-lane' => 'pages/dashboard/device/lane/lane-list.php',
+    'add-lane' => 'pages/dashboard/device/lane/add-lane.php',
+    'update-lane' => 'pages/dashboard/device/lane/update-lane.php',
+
 
 
     

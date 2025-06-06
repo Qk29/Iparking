@@ -16,7 +16,7 @@ use PDO;
      public static function all()
      {
          $db = Database::getInstance();
-         $stmt = $db->query("SELECT * FROM [tblLane]");    
+         $stmt = $db->query("SELECT l.*, c.ComputerName FROM [tblLane] as l LEFT JOIN [tblPC] as c ON l.PCID = c.PCID");    
          return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }
 
