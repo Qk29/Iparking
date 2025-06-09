@@ -100,13 +100,18 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $equipmentGroup->put('/delete-led/{id}', \App\Controllers\LedController::class . ':delete');
 
 
-
+        
     
     })->add(new \App\Middleware\AuthMiddleware());
 
     // route lane
     $group->group('/lane', function (RouteCollectorProxy $laneGroup) {
         $laneGroup->get('/get-all', \App\Controllers\LaneController::class . ':index'); 
+        $laneGroup->post('/add-lane', \App\Controllers\LaneController::class . ':create');
+        $laneGroup->get('/find-lane/{id}', \App\Controllers\LaneController::class . ':findLane');
+        $laneGroup->put('/update-lane/{id}', \App\Controllers\LaneController::class . ':update');
+        $laneGroup->delete('/delete-lane/{id}', \App\Controllers\LaneController::class . ':delete');
+
     })->add(new \App\Middleware\AuthMiddleware());
 
     // route vehicle-group

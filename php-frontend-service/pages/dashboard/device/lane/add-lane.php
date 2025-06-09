@@ -21,6 +21,50 @@
         $cameraApiUrl = 'http://localhost:8000/api/equipment/camera-list';
         $cameraResponse = apiRequest('GET', $cameraApiUrl);
         $cameras = json_decode($cameraResponse, true);
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $addLaneUrl = 'http://localhost:8000/api/lane/add-lane';
+            $data = [
+                'LaneName' => $_POST['LaneName'] ?? '',
+                'PCID' => $_POST['PCID'] ?? '',
+                'LaneType' => $_POST['LaneType'] ?? 0,
+                'C1' => $_POST['C1'] ?? 0,
+                'C2' => $_POST['C2'] ?? 0,
+                'C3' => $_POST['C3'] ?? 0,
+                'C4' => $_POST['C4'] ?? 0,
+                'C5' => $_POST['C5'] ?? 0,
+                'C6' => $_POST['C6'] ?? 0,
+                'CheckPlateLevelIn' => $_POST['CheckPlateLevelIn'] ?? 0,
+                'CheckPlateLevelOut' => $_POST['CheckPlateLevelOut'] ?? 0,
+                'CheckPlateOutOption2' => $_POST['CheckPlateOutOption2'] ?? 0,
+                'OpenBarrieIn' => $_POST['OpenBarrieIn'] ?? 0,
+                'OpenBarrieOption1' => $_POST['OpenBarrieOption1'] ?? 0,
+                'OpenBarrieOption2' => $_POST['OpenBarrieOption2'] ?? 0,
+                'VehicleTypeLeft' => $_POST['VehicleTypeLeft'] ?? 0,
+                'VehicleTypeRight' => $_POST['VehicleTypeRight'] ?? 0,
+                'CardTypeLeft' => $_POST['CardTypeLeft']  ?? 0,
+                'CardTypeRight' => $_POST['CardTypeRight'] ?? 0,
+                'IsLoop' => isset($_POST['IsLoop']) ? 0 : 1,
+                'IsPrint' => isset($_POST['IsPrint']) ? 0 : 1,
+                'IsFree' => isset($_POST['IsFree']) ? 0 : 1,
+                'IsLED' => isset($_POST['IsLED']) ? 0 : 1,
+                'Inactive' => isset($_POST['Inactive']) ? 0 : 1,
+                
+            ];
+            $response = apiRequest('POST', $addLaneUrl, $data);
+            $responseData = json_decode($response, true);
+            
+            if (isset($responseData['status']) && $responseData['status'] === 'success') {
+            echo '<div class="alert alert-success">Thêm mới làn thành công!</div>';
+            // Optionally redirect or reload the page
+            echo '<script>setTimeout(function() { window.location.href = "index.php?page=in-out-lane"; }, 200);</script>';
+            
+            } else {
+                echo '<div class="alert alert-danger">Lỗi khi thêm mới làn: ' . htmlspecialchars($responseData['message'] ?? 'Không rõ lỗi') . '</div>';
+            }
+        }
+
 ?>
     <style>
         .form-section {
@@ -169,7 +213,7 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <select class="form-control" id="CheckPlateLevelOutOption2" name="CheckPlateLevelOutOption2">
+                            <select class="form-control" id="CheckPlateOutOption2" name="CheckPlateOutOption2">
                                 <option value="3">So sánh biển đăng ký, biển vào, biển ra</option>
                                 <option value="4">Chỉ so sánh biển vào, biển ra</option>
                                 <option value="5">Chỉ so sánh biển ra, biển đăng ký</option>
@@ -180,7 +224,7 @@
 
                  <div class="col-md-10 mt-2 form-section">
                     <label class="form-label">Mở barie vào <span class="text-danger">*</span></label>                   
-                <select class="form-control" id="OpenBarrieIn1" name="OpenBarrieIn1">
+                <select class="form-control" id="OpenBarrieIn" name="OpenBarrieIn">
                                 <option selected="selected" value="0">Không mở barrie</option>
                                 <option value="2">Tự mở với mọi loại thẻ</option>
                                 <option value="3">Thẻ tháng đúng BS đăng ký và thẻ lượt</option>
@@ -219,11 +263,13 @@
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLeft" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Loại xe làn trái <span class="badge badge-light text-dark ml-1">All selected (4)</span>
                                 </button>
-                                <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuLeft">
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Ô tô</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Xe máy</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Xe đạp</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Xe đạp điện</label>
+                                <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuRight">
+                                    <?php foreach($vehicleGroups as $vehicleGroup): ?>
+                                        <label class="dropdown-item" style="color: white !important;">
+                                            <input type="checkbox" name="VehicleTypeLeft[]" value="<?= $vehicleGroup['VehicleGroupID'] ?>" checked>
+                                            <?= $vehicleGroup['VehicleGroupName'] ?>
+                                        </label>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +280,10 @@
                                 </button>
                                 <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuRight">
                                     <?php foreach($vehicleGroups as $vehicleGroup): ?>
-                                        <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> <?= $vehicleGroup['VehicleGroupName'] ?></label>
+                                        <label class="dropdown-item" style="color: white !important;">
+                                            <input type="checkbox" name="VehicleTypeRight[]" value="<?= $vehicleGroup['VehicleGroupID'] ?>" checked>
+                                            <?= $vehicleGroup['VehicleGroupName'] ?>
+                                        </label>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
@@ -251,10 +300,10 @@
                                     Loại thẻ làn trái <span class="badge badge-light text-dark ml-1">All selected (4)</span>
                                 </button>
                                 <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuLeft">
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Thuê bao</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Vé lượt</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Vé miễn phí</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Thẻ vip</label>
+                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" name="CardTypeLeft[]" value="1" checked> Thuê bao</label>
+                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" name="CardTypeLeft[]" value="2" checked> Vé lượt</label>
+                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" name="CardTypeLeft[]" value="3" checked> Vé miễn phí</label>
+                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" name="CardTypeLeft[]" value="4" checked> Thẻ vip</label>
                                 </div>
                             </div>
                         </div>  
@@ -264,10 +313,18 @@
                                     Loại thẻ làn phải <span class="badge badge-light text-dark ml-1">All selected (4)</span>
                                 </button>
                                 <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuRight">
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Thuê bao</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Vé lượt</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Vé miễn phí</label>
-                                    <label class="dropdown-item" style="color: white !important;"><input type="checkbox" checked> Thẻ vip</label>
+                                    <label class="dropdown-item" style="color: white !important;">
+                                        <input type="checkbox" name="CardTypeRight[]" value="1" checked> Thuê bao
+                                    </label>
+                                    <label class="dropdown-item" style="color: white !important;">
+                                        <input type="checkbox" name="CardTypeRight[]" value="2" checked> Vé lượt
+                                    </label>
+                                    <label class="dropdown-item" style="color: white !important;">
+                                        <input type="checkbox" name="CardTypeRight[]" value="3" checked> Vé miễn phí
+                                    </label>
+                                    <label class="dropdown-item" style="color: white !important;">
+                                        <input type="checkbox" name="CardTypeRight[]" value="4" checked> Thẻ vip
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -275,22 +332,22 @@
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="Inactive" id="inactiveCheck">
+                    <input type="checkbox" class="form-check-input" name="IsLoop" id="inactiveCheck">
                     <label class="form-check-label" for="inactiveCheck">Sử dụng vòng (loop)</label>
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="Inactive" id="inactiveCheck">
+                    <input type="checkbox" class="form-check-input" name="IsPrint" id="inactiveCheck">
                     <label class="form-check-label" for="inactiveCheck">Tự động in biên lai</label>
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="Inactive" id="inactiveCheck">
+                    <input type="checkbox" class="form-check-input" name="IsFree" id="inactiveCheck">
                     <label class="form-check-label" for="inactiveCheck">Nút miễn phí cho xe ưu tiên</label>
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="Inactive" id="inactiveCheck">
+                    <input type="checkbox" class="form-check-input" name="IsLED" id="inactiveCheck">
                     <label class="form-check-label" for="inactiveCheck">Hiển thị LED</label>
                 </div>
 
@@ -307,7 +364,7 @@
                 <button type="submit" class="btn btn-success"><i class="fas fa-sync-alt"></i> Lưu</button>
                 <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Lưu và thoát</button>
                 <button type="reset" class="btn btn-secondary"><i class="fas fa-undo"></i> Nhập lại</button>
-                <a href="index.php?page=card-category" class="btn btn-warning text-white"><i class="fas fa-arrow-left"></i> Quay lại</a>
+                <a href="index.php?page=in-out-lane" class="btn btn-warning text-white"><i class="fas fa-arrow-left"></i> Quay lại</a>
             </div>
         </form>
     </div>

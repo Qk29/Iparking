@@ -21,7 +21,7 @@
             $ledId = $_POST['delete_led_id'];
             $deleteLedApiUrl = 'http://localhost:8000/api/equipment/delete-led/' . $ledId;
             $response = apiRequest('PUT', $deleteLedApiUrl);
-            var_dump($response);
+           
             $responseData = json_decode($response, true);
             
             if (isset($responseData['status']) && $responseData['status'] === 'success') {

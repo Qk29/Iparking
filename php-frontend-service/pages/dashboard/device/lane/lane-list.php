@@ -14,26 +14,30 @@
     $lanes  = json_decode($laneResponse, true);
 
     
+    
+    
 
-    // if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //     if (isset($_POST['delete_led_id'])) {
-    //         $ledId = $_POST['delete_led_id'];
-    //         $deleteLedApiUrl = 'http://localhost:8000/api/equipment/delete-led/' . $ledId;
-    //         $response = apiRequest('PUT', $deleteLedApiUrl);
-    //         var_dump($response);
-    //         $responseData = json_decode($response, true);
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['delete_lane_id'])) {
+            $laneId = $_POST['delete_lane_id'];
             
-    //         if (isset($responseData['status']) && $responseData['status'] === 'success') {
+            $deleteLaneApiUrl = 'http://localhost:8000/api/lane/delete-lane/'.$laneId;
+            
+            $response = apiRequest('DELETE', $deleteLaneApiUrl);
+            
+            $responseData = json_decode($response, true);
+            
+            if (isset($responseData['status']) && $responseData['status'] === 'success') {
 
-    //             echo '<div class="alert alert-success">Xóa LED thành công!</div>';
-    //             // reload the page 
-    //           echo '<script>setTimeout(function() { window.location.href = "index.php?page=led-display"; }, 200);</script>';
+                echo '<div class="alert alert-success">Xóa làn thành công!</div>';
+                // reload the page 
+              echo '<script>setTimeout(function() { window.location.href = "index.php?page=in-out-lane"; }, 200);</script>';
                 
-    //         } else {
-    //             echo '<div class="alert alert-danger">Lỗi khi xóa camera: ' . htmlspecialchars($responseData['message'] ?? 'Không rõ lỗi') . '</div>';
-    //         }
-    //     }
-    // }
+            } else {
+                echo '<div class="alert alert-danger">Lỗi khi xóa làn: ' . htmlspecialchars($responseData['message'] ?? 'Không rõ lỗi') . '</div>';
+            }
+        }
+    }
 
 ?>
 
