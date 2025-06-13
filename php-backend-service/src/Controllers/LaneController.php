@@ -16,7 +16,7 @@
 
         public function create(Request $request, Response $response, $args) : Response {
             $data = $request->getParsedBody();
-             error_log('LANE INSERT DATA: ' . json_encode($data));
+
             $result = Lane::addLane($data);
             
             if ($result) {

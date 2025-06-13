@@ -63,7 +63,7 @@
                     <td><?= $computer['Description'] ?></td>
                     <td>
                         <div class="d-flex justify-content-center align-items-center">
-                            <span class="badge bg-<?= $computer ['Inactive'] == 0 ? 'success' : 'warning' ?>">
+                            <span class="badge text-<?= $computer ['Inactive'] == 0 ? 'success' : 'warning' ?>">
                              <?= $computer['Inactive'] == 0 ? 'Kích hoạt' : 'Ngừng kích hoạt' ?>
                             </span>
                         </div>

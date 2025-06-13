@@ -67,6 +67,9 @@ $routes = [
     'update-lane' => 'pages/dashboard/device/lane/update-lane.php',
 
 
+    // quản lý khách hàng/danh sách khách hàng
+
+
 
     
 ];

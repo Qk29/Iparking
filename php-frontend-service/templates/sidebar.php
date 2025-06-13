@@ -354,89 +354,18 @@
                     </span>
 
                     <b class="caret fa fa-angle-left rt-n90"></b>
-
-                    <!-- or you can use custom icons. first add `d-style` to 'A' -->
-                    <!--
-               	 	<b class="caret d-n-collapsed fa fa-minus text-80"></b>
-               	 	<b class="caret d-collapsed fa fa-plus text-80"></b>
-               	 -->
                   </a>
+
 
                   <div class="hideable submenu collapse">
                     <ul class="submenu-inner">
-
                       <li class="nav-item">
-
-                        <a href="html/form-basic.html" class="nav-link">
-
+                        <a href="index.php?page=customer" class="nav-link">
                           <span class="nav-text">
-               				  <span>Basic Elements</span>
+                            <i class="fas fa-caret-right mr-2 "></i>
+               				      <span>Danh sách khách hàng</span>
                           </span>
-
-
                         </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/form-more.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>More Elements</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/form-wizard.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Wizard &amp; Validation</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/form-upload.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>File Upload</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/form-wysiwyg.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Wysiwyg &amp; Markdown</span>
-                          </span>
-
-
-                        </a>
-
-
                       </li>
 
                     </ul>

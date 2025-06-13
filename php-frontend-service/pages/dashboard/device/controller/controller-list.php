@@ -53,15 +53,11 @@
         </select>
     </div>
     <div class="col-md-2">
-      <button id="searchButton" class="btn btn-sm btn-primary"><i class="bi bi-search"></i> Tìm kiếm</button>
-      <button id="reloadButton" class="btn btn-sm btn-secondary">Nạp lại</button>
+      <button id="searchButton" class="btn btn-sm btn-primary me-2"><i class="bi bi-search"></i> Tìm kiếm</button>
+      <button id="reloadButton" class="btn btn-sm btn-secondary me-2">Nạp lại</button>
+      <a href="index.php?page=add-controller" class="btn btn-sm btn-success me-2"> Thêm mới</a>
     </div>
-    <div class="mt-3">
-       <!-- Thêm mới -->
- 
-    <a href="index.php?page=add-controller" class="btn btn-sm btn-success"> Thêm mới</a>
- 
-    </div>
+    
     </div>
 
 
@@ -86,7 +82,7 @@
                     
                     <td>
                         <div class="d-flex justify-content-center align-items-center">
-                            <span class="badge bg-<?= $controller ['Inactive'] == 0 ? 'success' : 'warning' ?>">
+                            <span class="badge text-<?= $controller ['Inactive'] == 0 ? 'success' : 'warning' ?>">
                              <?= $controller['Inactive'] == 0 ? 'Kích hoạt' : 'Ngừng kích hoạt' ?>
                             </span>
                         </div>

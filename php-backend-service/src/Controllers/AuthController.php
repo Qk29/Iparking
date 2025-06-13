@@ -13,7 +13,7 @@ class AuthController
     public function login(Request $request, Response $response): Response
     {
         $params = (array) $request->getParsedBody();
-        error_log(print_r($params, true));
+        
 
         $username = $params['Username'] ?? null;
         $password = $params['Password'] ?? null;

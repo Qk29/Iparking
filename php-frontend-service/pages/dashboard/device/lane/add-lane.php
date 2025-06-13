@@ -49,7 +49,7 @@
                 'IsPrint' => isset($_POST['IsPrint']) ? 0 : 1,
                 'IsFree' => isset($_POST['IsFree']) ? 0 : 1,
                 'IsLED' => isset($_POST['IsLED']) ? 0 : 1,
-                'Inactive' => isset($_POST['Inactive']) ? 0 : 1,
+                'Inactive' => isset($_POST['Inactive']) ? 1 : 0,
                 
             ];
             $response = apiRequest('POST', $addLaneUrl, $data);
@@ -261,7 +261,7 @@
                         <div class="col-md-6">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLeft" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Loại xe làn trái <span class="badge badge-light text-dark ml-1">All selected (4)</span>
+                                    Loại xe làn trái <span class="badge badge-light text-dark ml-1">All selected</span>
                                 </button>
                                 <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuRight">
                                     <?php foreach($vehicleGroups as $vehicleGroup): ?>
@@ -276,7 +276,7 @@
                         <div class="col-md-6">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuRight" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Loại xe làn phải <span class="badge badge-light text-dark ml-1">All selected (4)</span>
+                                    Loại xe làn phải <span class="badge badge-light text-dark ml-1">All selected</span>
                                 </button>
                                 <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuRight">
                                     <?php foreach($vehicleGroups as $vehicleGroup): ?>
@@ -297,7 +297,7 @@
                         <div class="col-md-6">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLeft" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Loại thẻ làn trái <span class="badge badge-light text-dark ml-1">All selected (4)</span>
+                                    Loại thẻ làn trái <span class="badge badge-light text-dark ml-1">All selected</span>
                                 </button>
                                 <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuLeft">
                                     <label class="dropdown-item" style="color: white !important;"><input type="checkbox" name="CardTypeLeft[]" value="1" checked> Thuê bao</label>
@@ -310,7 +310,7 @@
                         <div class="col-md-6">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuRight" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Loại thẻ làn phải <span class="badge badge-light text-dark ml-1">All selected (4)</span>
+                                    Loại thẻ làn phải <span class="badge badge-light text-dark ml-1">All selected</span>
                                 </button>
                                 <div class="dropdown-menu" style="background-color: #6fa8dc;" aria-labelledby="dropdownMenuRight">
                                     <label class="dropdown-item" style="color: white !important;">
@@ -332,28 +332,28 @@
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="IsLoop" id="inactiveCheck">
-                    <label class="form-check-label" for="inactiveCheck">Sử dụng vòng (loop)</label>
+                    <input type="checkbox" class="form-check-input" name="IsLoop" id="">
+                    <label class="form-check-label" for="">Sử dụng vòng (loop)</label>
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="IsPrint" id="inactiveCheck">
-                    <label class="form-check-label" for="inactiveCheck">Tự động in biên lai</label>
+                    <input type="checkbox" class="form-check-input" name="IsPrint" id="">
+                    <label class="form-check-label" for="">Tự động in biên lai</label>
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="IsFree" id="inactiveCheck">
-                    <label class="form-check-label" for="inactiveCheck">Nút miễn phí cho xe ưu tiên</label>
+                    <input type="checkbox" class="form-check-input" name="IsFree" id="">
+                    <label class="form-check-label" for="">Nút miễn phí cho xe ưu tiên</label>
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="IsLED" id="inactiveCheck">
-                    <label class="form-check-label" for="inactiveCheck">Hiển thị LED</label>
+                    <input type="checkbox" class="form-check-input" name="IsLED" id="">
+                    <label class="form-check-label" for="">Hiển thị LED</label>
                 </div>
 
                 <div class="form-check mt-3">
-                    <input type="checkbox" class="form-check-input" name="Inactive" id="inactiveCheck">
-                    <label class="form-check-label" for="inactiveCheck">Ngừng sử dụng</label>
+                    <input type="checkbox" class="form-check-input" name="Inactive" id="">
+                    <label class="form-check-label" for="">Ngừng sử dụng</label>
                 </div>
 
                 
