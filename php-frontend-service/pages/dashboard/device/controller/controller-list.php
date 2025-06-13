@@ -52,7 +52,7 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <button id="searchButton" class="btn btn-sm btn-primary me-2"><i class="bi bi-search"></i> Tìm kiếm</button>
       <button id="reloadButton" class="btn btn-sm btn-secondary me-2">Nạp lại</button>
       <a href="index.php?page=add-controller" class="btn btn-sm btn-success me-2"> Thêm mới</a>

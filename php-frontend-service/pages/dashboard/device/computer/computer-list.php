@@ -28,16 +28,12 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <button id="searchButton" class="btn btn-sm btn-primary"><i class="bi bi-search"></i> Tìm kiếm</button>
       <button id="reloadButton" class="btn btn-sm btn-secondary">Nạp lại</button>
+      <a href="index.php?page=add-computer" class="btn btn-sm btn-success"> Thêm mới</a>
     </div>
-    <div class="mt-3">
-       <!-- Thêm mới -->
- 
-    <a href="index.php?page=add-computer" class="btn btn-sm btn-success"> Thêm mới</a>
- 
-    </div>
+   
     </div>
 
 

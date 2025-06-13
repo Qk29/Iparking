@@ -114,6 +114,15 @@ $app->group('/api', function (RouteCollectorProxy $group) {
 
     })->add(new \App\Middleware\AuthMiddleware());
 
+    // route customer-manager
+    $group->group('/customer-manager', function (RouteCollectorProxy $customerManager) {
+        $customerManager->get('/customer-list', \App\Controllers\CustomerManagerController::class . ':index'); 
+        $customerManager->post('/add-customer', \App\Controllers\CustomerManagerController::class . ':create');
+        $customerManager->get('/find-customer-manager/{id}', \App\Controllers\CustomerManagerController::class . ':find');
+        $customerManager->put('/update-customer/{id}', \App\Controllers\CustomerManagerController::class . ':update');
+        $customerManager->delete('/delete-customer/{id}', \App\Controllers\CustomerManagerController::class . ':delete');
+    })->add(new \App\Middleware\AuthMiddleware());
+
     // route vehicle-group
     $group->group('/vehicle-group', function (RouteCollectorProxy $vehicleGroup) {
         $vehicleGroup->get('/get-all', \App\Controllers\VehicleGroupController::class . ':index'); 

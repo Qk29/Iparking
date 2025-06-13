@@ -68,7 +68,9 @@ $routes = [
 
 
     // quản lý khách hàng/danh sách khách hàng
-
+    'customer' => 'pages/dashboard/customer-manager/customer-list.php',
+    'add-customer-manager' => 'pages/dashboard/customer-manager/add-customer-manager.php',
+    'update-customer-manager' => 'pages/dashboard/customer-manager/update-customer-manager.php',
 
 
     

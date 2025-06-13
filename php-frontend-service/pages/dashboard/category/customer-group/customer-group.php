@@ -1,6 +1,6 @@
 <?php 
     include_once __DIR__ . '/../../../../api/request.php';
-    include_once __DIR__ . '/../../../../helpers/tree-helper.php';  
+     
     // call api to get customer groups
     $customerGroupApiUrl = 'http://localhost:8000/api/category/customer-group';
     $customerGroupResponse = apiRequest('GET', $customerGroupApiUrl);
@@ -14,7 +14,7 @@
                 $deleteUrl = "http://localhost:8000/api/category/customer-group-softdelete/$deleteCustomerGroupId";
                 $deleteResponse = apiRequest('PUT', $deleteUrl, ['CustomerGroupID' => $deleteCustomerGroupId]);
                 $result = json_decode($deleteResponse, true);
-                if (isset($result['status']) && $result['status'] === 'success') {
+                if (isset($result['status']) && $result['status'] === 'success') {  
                     echo "<script>alert('Đã xóa nhóm khách hàng thành công!');</script>";
                     // Refresh the page to see the changes
                     echo "<script>window.location.href = 'index.php?page=customer-group';</script>";

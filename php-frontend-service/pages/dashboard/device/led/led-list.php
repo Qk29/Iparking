@@ -54,18 +54,13 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="col-md-3">
-      <button id="searchButton" class="btn btn-sm btn-primary"><i class="bi bi-search"></i> Tìm kiếm</button>
-      <button id="reloadButton" class="btn btn-sm btn-secondary">Nạp lại</button>
-      <a href="pages/dashboard/device/led/export-led.php" class="btn btn-sm btn-success">Xuất Excel</a>
-      
+    <div class="col-md-4">
+      <button id="searchButton" class="btn btn-sm btn-primary me-2"><i class="bi bi-search"></i> Tìm kiếm</button>
+      <button id="reloadButton" class="btn btn-sm btn-secondary me-2">Nạp lại</button>
+      <a href="pages/dashboard/device/led/export-led.php" class="btn btn-sm btn-warning me-2">Xuất Excel</a>
+      <a href="index.php?page=add-led" class="btn btn-sm btn-success me-2"> Thêm mới</a>
     </div>
-    <div class="mt-3">
-       <!-- Thêm mới -->
- 
-    <a href="index.php?page=add-led" class="btn btn-sm btn-success"> Thêm mới</a>
- 
-    </div>
+  
     </div>
 
 
