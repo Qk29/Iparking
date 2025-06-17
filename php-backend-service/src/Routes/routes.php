@@ -123,6 +123,16 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $customerManager->delete('/delete-customer/{id}', \App\Controllers\CustomerManagerController::class . ':delete');
     })->add(new \App\Middleware\AuthMiddleware());
 
+
+    // route card-manager
+    $group->group('/card-manager', function (RouteCollectorProxy $cardManager) {
+        $cardManager->get('/card-list', \App\Controllers\CardManagerController::class . ':index'); 
+        $cardManager->post('/add-card', \App\Controllers\CardManagerController::class . ':create');
+        $cardManager->get('/find-card/{id}', \App\Controllers\CardManagerController::class . ':find');
+        $cardManager->put('/update-card/{id}', \App\Controllers\CardManagerController::class . ':update');
+        $cardManager->delete('/delete-card/{id}', \App\Controllers\CardManagerController::class . ':delete');
+    })->add(new \App\Middleware\AuthMiddleware());
+
     // route vehicle-group
     $group->group('/vehicle-group', function (RouteCollectorProxy $vehicleGroup) {
         $vehicleGroup->get('/get-all', \App\Controllers\VehicleGroupController::class . ':index'); 

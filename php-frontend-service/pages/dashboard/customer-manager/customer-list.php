@@ -38,7 +38,7 @@
 ?>
 
 
-<div class="container mt-5">
+<div class="container">
   <h4 class="mb-4">Danh sách khách hàng</h4>
 
    <div class="row mb-3">
@@ -64,7 +64,10 @@
       <a href="index.php?page=add-customer-manager" class="btn btn-sm btn-success me-2"> Thêm mới</a>
       <button id="reloadButton" class="btn btn-sm btn-secondary me-2">Nạp lại</button>
       <a href="pages/dashboard/customer-manager/export-customer.php" class="btn btn-sm btn-info me-2">Xuất Excel</a>
-      <a href="" class="btn btn-sm btn-warning me-2">Nhập Excel</a>
+      <button class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#importModal">
+        Nhập file Excel
+      </button>
+      
       
       <button id="searchButton" class="btn btn-sm btn-primary me-2"><i class="bi bi-search"></i> Tìm kiếm</button>
     </div>
@@ -90,10 +93,10 @@
       </thead>
       <tbody>
             <?php foreach ($customers as $key => $customer): ?>
-                <tr class="customer-row" data-customer-id="<?= $customer['CustomerGroupID'] ?>">
+                <tr class="customer-row" data-customer-group-id="<?= $customer['CustomerGroupID'] ?>" data-customer-status="<?= $customer['Inactive'] ?>">
                     <td><?= $key + 1 ?></td>
                     <td><?= $customer['CustomerCode'] ?></td>
-                    <td><?= $customer['CustomerName'] ?></td>
+                    <td class="customer-name"><?= $customer['CustomerName'] ?></td>
                     <td><?= $customer['Mobile'] ?></td>
                     <td><?= $customer['Address'] ?></td>
                     <td><?= $customer['CompartmentName'] ?></td>
@@ -106,22 +109,29 @@
                         </div>
                     </td>
                     <td>
-                        <!-- Sửa -->
-                        <a href="index.php?page=update-customer-manager&id=<?=$customer['CustomerID'] ?>" title="Sửa" class="d-inline-block me-2">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                          <!-- Sửa -->
+                          <a href="index.php?page=update-customer-manager&id=<?= $customer['CustomerID'] ?>" title="Sửa">
                             <i class="ace-icon fa fa-pencil bigger-120" style="color:green;"></i>
-                        </a>
+                          </a>
 
-                        <!-- Xóa -->
-                        <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');" class="d-inline-block me-2">
-                        <input type="hidden" name="delete_customer_id" value="<?= $customer['CustomerID'] ?>">
-                        <button type="submit" class="btnDelete" title="Xóa" style="border:none; background:none; cursor:pointer;">
-                            <i class="ace-icon fa fa-trash bigger-120" style="color:red;"></i>
-                        </button>
-                        </form>
+                          <!-- Xóa -->
+                          <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
+                            <input type="hidden" name="delete_customer_id" value="<?= $customer['CustomerID'] ?>">
+                            <button type="submit" title="Xóa" style="border:none; background:none; cursor:pointer;">
+                              <i class="ace-icon fa fa-trash bigger-120" style="color:red;"></i>
+                            </button>
+                          </form>
+
+                          <!-- Thẻ -->
+                          <a href="index.php?page=card-customer-manager&id=<?= $customer['CustomerID'] ?>" title="Thẻ" target="_blank">
+                            <i class="fa fa-credit-card warning"></i>
+                          </a>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
-                    
+              
       </tbody>
     </table>
   </div>
@@ -132,15 +142,18 @@
   $(document).ready(function(){
     $('#searchButton').on('click', function(){
       var searchTerm = $('#searchInput').val().toLowerCase();
-      var selectedComputer = $('#computerSelect').val();
-      $('.led-row').each(function(){
+      var selectedCustomer = $('#customerSelect').val();
+      var selectedstatus = $('#customerstatus').val();
+      $('.customer-row').each(function(){
 
-        var ledName = $(this).find('.led-name').text().toLowerCase();
-        var PCID = $(this).data('led-id') || '';
+        var customerName = $(this).find('.customer-name').text().toLowerCase();
+        var customerGroupID = $(this).data('customer-group-id').toString();
+        var customerStatus = $(this).data('customer-status').toString();
         
-        var matchesSearch = ledName.includes(searchTerm);
-        var matchesComputer = selectedComputer === '#' || PCID.includes(selectedComputer);
-        if (matchesSearch && matchesComputer) {
+        var matchesSearch = customerName.includes(searchTerm);
+        var matchesCustomer = selectedCustomer === '#' || selectedCustomer === customerGroupID;
+        var matchesStatus = selectedstatus === '' || selectedstatus == customerStatus;
+        if (matchesSearch && matchesCustomer && matchesStatus) {
           $(this).show();
         } else {
           $(this).hide();

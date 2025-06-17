@@ -1,3 +1,9 @@
+<style>
+  .sidebar {
+    width: 250px !important;
+    min-width: 200px !important;
+}
+</style>
 <div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-light">
           <div class="sidebar-inner">
 
@@ -281,21 +287,15 @@
                     </span>
 
                     <b class="caret fa fa-angle-left rt-n90"></b>
-
-                    <!-- or you can use custom icons. first add `d-style` to 'A' -->
-                    <!--
-               	 	<b class="caret d-n-collapsed fa fa-minus text-80"></b>
-               	 	<b class="caret d-collapsed fa fa-plus text-80"></b>
-               	 -->
                   </a>
 
                   <div class="hideable submenu collapse">
                     <ul class="submenu-inner">
 
                       <li class="nav-item">
-                        <a href="html/table-basic.html" class="nav-link">
+                        <a href="index.php?page=card-customer-manager" class="nav-link">
                           <span class="nav-text">
-               				  <span>Basic Tables</span>
+               				  <span>Danh sách thẻ</span>
                           </span>
                         </a>
                       </li>

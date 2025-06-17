@@ -73,6 +73,10 @@ $routes = [
     'update-customer-manager' => 'pages/dashboard/customer-manager/update-customer-manager.php',
 
 
+    // Quản lý thẻ 
+    'card-customer-manager' => 'pages/dashboard/card-manager/card-list.php',
+
+
     
 ];
 $page = $_GET['page'] ?? 'dashboard';   
