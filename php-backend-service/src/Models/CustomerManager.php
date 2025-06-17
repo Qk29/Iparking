@@ -47,7 +47,7 @@ class CustomerManager{
         AccessExpireDate,
         UserFaceId
 
-    ) VALUES (
+    )OUTPUT INSERTED.CustomerID VALUES (
         :CustomerCode,
         :CustomerName,
         :IDNumber,
@@ -85,23 +85,25 @@ class CustomerManager{
     $stmt->bindValue(':CompartmentID',    $data['CompartmentID'],PDO::PARAM_STR);
     $stmt->bindValue(':Address',          $data['Address']);
     $stmt->bindValue(':EnableAccount',    $data['EnableAccount']);
-    $stmt->bindValue(':Account',          $data['Account']);
-    $stmt->bindValue(':Password',         $data['Password']);
+    $stmt->bindValue(':Account',          $data['Account']) ?? null;
+    $stmt->bindValue(':Password',         $data['Password'] ?? null, PDO::PARAM_STR); // Không mã hóa, giữ nguyên giá trị
     $stmt->bindValue(':Avatar', $data['Avatar'] ?? null);
-    $stmt->bindValue(':Inactive',         $data['Inactive'] ?: 0);
-    $stmt->bindValue(':DateInConstruction', $data['DateInConstruction'] ?: date('Y-m-d H:i:s'));
-    $stmt->bindValue(':Birthday',         $data['Birthday'] ?: date('Y-m-d H:i:s'));
-    $stmt->bindValue(':DateUpdate',       $data['DateUpdate'] ?: date('Y-m-d H:i:s'));
-    $stmt->bindValue(':AccessLevelID',    $data['AccessLevelID'] ?: '0');
-    $stmt->bindValue(':Finger1',          $data['Finger1'] ?: '0');
-    $stmt->bindValue(':Finger2',          $data['Finger2'] ?: '0');
-    $stmt->bindValue(':UserIDofFinger',   $data['UserIDofFinger'] ?: '0');
-    $stmt->bindValue(':DevPass',          $data['DevPass'] ?: '0');
-    $stmt->bindValue(':AccessExpireDate', $data['AccessExpireDate'] ?: date('Y-m-d H:i:s'));
-    $stmt->bindValue(':UserFaceId',       $data['UserFaceId'] ?: '0');
+    $stmt->bindValue(':Inactive',         $data['Inactive'] ?? 0);
+    $stmt->bindValue(':DateInConstruction', $data['DateInConstruction'] ?? date('Y-m-d H:i:s'));
+    $stmt->bindValue(':Birthday',         $data['Birthday'] ?? date('Y-m-d H:i:s'));
+    $stmt->bindValue(':DateUpdate',       $data['DateUpdate'] ?? date('Y-m-d H:i:s'));
+    $stmt->bindValue(':AccessLevelID',    $data['AccessLevelID'] ?? '0');
+    $stmt->bindValue(':Finger1',          $data['Finger1'] ?? '0');
+    $stmt->bindValue(':Finger2',          $data['Finger2'] ?? '0');
+    $stmt->bindValue(':UserIDofFinger',   $data['UserIDofFinger'] ?? '0');
+    $stmt->bindValue(':DevPass',          $data['DevPass'] ?? '0');
+    $stmt->bindValue(':AccessExpireDate', $data['AccessExpireDate'] ?? date('Y-m-d H:i:s'));
+    $stmt->bindValue(':UserFaceId',       $data['UserFaceId'] ?? '0');
 
     
-        return $stmt->execute();
+        $stmt->execute();
+        $CustomerID = $stmt->fetchColumn();
+        return $CustomerID;
     } catch (PDOException $e) {
     error_log('DB Error: ' . $e->getMessage());
     return false;

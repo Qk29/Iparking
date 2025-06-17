@@ -27,6 +27,12 @@
 
 ?>
 
+<style>
+    .table {
+    font-size: 12px !important;
+}
+</style>
+
 
 <div class="container mt-5">
   <h4 class="mb-4">Danh sách nhóm thẻ</h4>

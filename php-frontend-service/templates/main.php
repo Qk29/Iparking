@@ -10,11 +10,16 @@ $username = $_SESSION['user']['Username'];
     
 
  ?>
+<style>
+  .col-md-3.col-lg-2 {
+  padding-left: 0 !important;
+}
+</style>
 <?php include_once 'header.php'; ?>
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
-    <div class="col-md-3 col-lg-2 bg-light p-3">
+    <div class="col-md-3 col-lg-2 bg-light ">
       <?php include_once 'sidebar.php'; ?>
     </div>
 

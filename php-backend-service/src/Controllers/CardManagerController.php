@@ -13,6 +13,18 @@ class CardManagerController {
     }
 
     // Add other methods for creating, updating, and deleting customers as needed
+    public function create(Request $request, Response $response, $args) {
+        $data = $request->getParsedBody();
+        error_log(json_encode($data));
+        $result = CardManager::addCard($data);
+        if ($result) {
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withStatus(201)->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+    }
 }
 
 ?>

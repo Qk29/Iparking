@@ -36,7 +36,11 @@
     }
 
 ?>
-
+<style>
+    .table {
+    font-size: 12px !important;
+}
+</style>
 
 <div class="container">
   <h4 class="mb-4">Danh sách khách hàng</h4>
@@ -60,7 +64,7 @@
             <option value="1">Dừng hoạt động</option>
         </select>
     </div>
-    <div class="col-md-5 mt-3">
+    <div class="col-md-6 mt-3">
       <a href="index.php?page=add-customer-manager" class="btn btn-sm btn-success me-2"> Thêm mới</a>
       <button id="reloadButton" class="btn btn-sm btn-secondary me-2">Nạp lại</button>
       <a href="pages/dashboard/customer-manager/export-customer.php" class="btn btn-sm btn-info me-2">Xuất Excel</a>

@@ -79,8 +79,9 @@
             <?php endforeach; ?>
         </select>
     </div>
+    
     <div class="col-md-6 mt-3">
-      <a href="index.php?page=add-customer-manager" class="btn btn-sm btn-success me-2"> Thêm mới</a>
+      <a href="index.php?page=add-card-manager" class="btn btn-sm btn-success me-2"> Thêm mới</a>
       <button id="reloadButton" class="btn btn-sm btn-secondary me-2">Nạp lại</button>
       <a href="pages/dashboard/card-manager/export-card.php" class="btn btn-sm btn-info me-2">Xuất Excel</a>
       <button class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#importModal">
@@ -148,7 +149,7 @@
                     <td><?= $card['CustomerName'] ?></td>
                     <td><?= $card['CustomerGroupName'] ?></td>
                     <td><?= $card['Address'] ?></td>
-                    <td><?= $card['CompartmentId'] ?></td>
+                    <td><?= $card['CompartmentName'] ?></td>
                     <td><?= $card['DateRegister'] ?></td>
                     <td>
                         <div class="d-flex justify-content-center align-items-center">

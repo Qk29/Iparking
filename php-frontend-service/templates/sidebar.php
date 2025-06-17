@@ -1,13 +1,7 @@
-<style>
-  .sidebar {
-    width: 250px !important;
-    min-width: 200px !important;
-}
-</style>
 <div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-light">
           <div class="sidebar-inner">
 
-            <div class="ace-scroll flex-grow-1" data-ace-scroll="{}">
+            <div class="ace-scroll flex-grow-1"  data-ace-scroll="{}" >
 
               <div class="sidebar-section my-2">
                 <!-- the shortcut buttons -->

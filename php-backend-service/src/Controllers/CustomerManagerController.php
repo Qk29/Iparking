@@ -20,7 +20,12 @@
             // }
             $result = CustomerManager::addCustomer($data);
             if($result){
-                $response->getBody()->write(json_encode(['status' => 'success']));
+                $response->getBody()->write(json_encode([
+                    'status' => 'success',
+                    'data' => [
+                        'CustomerID' => $result
+                    ]
+                ]));
                 return $response->withStatus(201)->withHeader('Content-Type', 'application/json');
             }else{
                 $response->getBody()->write(json_encode(['status' => 'error']));
