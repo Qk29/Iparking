@@ -13,12 +13,12 @@ class CardManager {
     }
     public static function getAllCard() {
         try {
-        $sql = "SELECT c.*, cg.CardGroupName, cu.CustomerName,cu.Address,cu.CompartmentId,cp.CompartmentName, cug.CustomerGroupName, cu.CustomerCode 
+        $sql = "SELECT c.*, cg.CardGroupName, cu.CustomerName,cu.Address,cu.CompartmentId,cu.CustomerGroupID,cp.CompartmentName, cug.CustomerGroupName, cu.CustomerCode 
                 FROM [tblCard] AS c
-                LEFT JOIN [tblCardGroup] AS cg ON c.CardGroupID = cg.CardGroupID
+                LEFT JOIN [tblCardGroup] AS cg ON TRY_CAST(c.CardGroupID AS uniqueidentifier) = cg.CardGroupID
                 LEFT JOIN [tblCustomer] AS cu ON TRY_CAST(c.CustomerID AS uniqueidentifier) = cu.CustomerID
-                LEFT JOIN [tblCustomerGroup] AS cug ON cu.CustomerGroupID = cug.CustomerGroupID
-                LEFT JOIN [tblCompartment] AS cp ON cu.CompartmentID = cp.CompartmentID";
+                LEFT JOIN [tblCustomerGroup] AS cug ON TRY_CAST(cu.CustomerGroupID AS uniqueidentifier) = cug.CustomerGroupID
+                LEFT JOIN [tblCompartment] AS cp ON TRY_CAST(cu.CompartmentId AS uniqueidentifier) = cp.CompartmentID";
         $db = Database::getInstance();
         $stmt = $db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
@@ -72,6 +72,91 @@ class CardManager {
                 return false;
             }
         }
+
+    public static function findCard($id) {
+        try {
+            $db = Database::getInstance();
+            $sql = "SELECT c.*, cg.CardGroupName, cu.CustomerName, cu.Address,cu.IDNumber, cu.CompartmentId, cu.CustomerGroupID, cp.CompartmentName, cug.CustomerGroupName, cu.CustomerCode 
+                    FROM [tblCard] AS c
+                    LEFT JOIN [tblCardGroup] AS cg ON c.CardGroupID = cg.CardGroupID
+                    LEFT JOIN [tblCustomer] AS cu ON TRY_CAST(c.CustomerID AS uniqueidentifier) = cu.CustomerID
+                    LEFT JOIN [tblCustomerGroup] AS cug ON cu.CustomerGroupID = cug.CustomerGroupID
+                    LEFT JOIN [tblCompartment] AS cp ON cu.CompartmentId = cp.CompartmentID
+                    WHERE c.CardID = :id";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error finding card: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public static function updateCard($id, $data) {
+    try {
+        $db = Database::getInstance();
+        $sql = "UPDATE [tblCard] SET 
+                    CardNo = :CardNo,
+                    CardGroupID = :CardGroupID,
+                    Description = :Description,
+                    CardNumber = :CardNumber,
+                    DateRegister = :DateRegister,
+                    DateRelease = :DateRelease,
+                    ImportDate = :ImportDate,
+                    ExpireDate = :ExpireDate,
+                    IsLock = :IsLock,
+                    Plate1 = :Plate1,
+                    Plate2 = :Plate2,
+                    Plate3 = :Plate3,
+                    VehicleName1 = :VehicleName1,
+                    VehicleName2 = :VehicleName2,
+                    VehicleName3 = :VehicleName3,
+                    CustomerID = :CustomerID,
+                    DateUpdate = GETDATE()
+                WHERE CardID = :CardID";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute([
+            ':CardNo' => $data['CardNo'],
+            ':CardGroupID' => $data['CardGroupID'],
+            ':Description' => $data['Description'],
+            ':CardNumber' => $data['CardNumber'],
+            ':DateRegister' => $data['DateRegister'],
+            ':DateRelease' => $data['DateRelease'],
+            ':ImportDate' => $data['ImportDate'],
+            ':ExpireDate' => $data['ExpireDate'],
+            ':IsLock' => $data['IsLock'],
+            ':Plate1' => $data['Plate1'],
+            ':Plate2' => $data['Plate2'],
+            ':Plate3' => $data['Plate3'],
+            ':VehicleName1' => $data['VehicleName1'],
+            ':VehicleName2' => $data['VehicleName2'],
+            ':VehicleName3' => $data['VehicleName3'],
+            ':CustomerID' => $data['CustomerID'],
+            ':CardID' => $id
+        ]);
+
+        return true;
+    } catch (PDOException $e) {
+        error_log("Error updating card: " . $e->getMessage());
+        return false;
+    }
+}
+
+    public static function deleteCard($id) {
+        try {
+            $db = Database::getInstance();
+            $sql = "DELETE FROM [tblCard] WHERE CardID = :id";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([':id' => $id]);
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error deleting card: " . $e->getMessage());
+            return false;
+        }
+    }
+
 
 
 }

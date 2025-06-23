@@ -13,11 +13,18 @@ class CustomerManager{
     }
     public static function getAllCustomer(){
         
-        $sql = "SELECT cu.*, cp.CompartmentName, cg.CustomerGroupName FROM [tblCustomer] as cu LEFT JOIN [tblCompartment] as cp ON cu.CompartmentID = cp.CompartmentID
-        LEFT JOIN [tblCustomerGroup] as cg ON cu.CustomerGroupID = cg.CustomerGroupID";
-        $db = Database::getInstance();
-        $stmt = $db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "SELECT cu.*, cp.CompartmentName, cg.CustomerGroupName FROM [tblCustomer] as cu 
+            LEFT JOIN [tblCompartment] as cp ON TRY_CAST(cu.CompartmentId AS uniqueidentifier) = cp.CompartmentID
+            LEFT JOIN [tblCustomerGroup] as cg ON TRY_CAST(cu.CustomerGroupID AS uniqueidentifier) = cg.CustomerGroupID
+            ";
+            $db = Database::getInstance();
+            $stmt = $db->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching all customers: " . $e->getMessage());
+            return [];
+        }
     }
 
     public static function addCustomer($data) {
@@ -167,15 +174,15 @@ public static function findCustomer($id) {
             $stmt->bindValue(':Password', $data['Password'] ?? '', PDO::PARAM_STR); // Không mã hóa, giữ nguyên giá trị
             $stmt->bindValue(':Avatar', $data['Avatar'] ?? null, PDO::PARAM_STR);
             $stmt->bindValue(':Inactive', $data['Inactive'] ?? 0, PDO::PARAM_INT);
-            $stmt->bindValue(':DateInConstruction', $data['DateInConstruction'] ?? date('Y-m-d H:i:s'), PDO::PARAM_STR);
-            $stmt->bindValue(':Birthday', $data['Birthday'] ?? null, PDO::PARAM_STR);
+            $stmt->bindValue(':DateInConstruction', $data['DateInConstruction'] ?? date('Y-m-d H:i:s'));
+            $stmt->bindValue(':Birthday', $data['Birthday'] ?? date('Y-m-d H:i:s'));
             $stmt->bindValue(':DateUpdate', date('Y-m-d H:i:s'), PDO::PARAM_STR); // Cập nhật thời gian hiện tại
             $stmt->bindValue(':AccessLevelID', $data['AccessLevelID'] ?? '0', PDO::PARAM_STR);
             $stmt->bindValue(':Finger1', $data['Finger1'] ?? '0', PDO::PARAM_STR);
             $stmt->bindValue(':Finger2', $data['Finger2'] ?? '0', PDO::PARAM_STR);
             $stmt->bindValue(':UserIDofFinger', $data['UserIDofFinger'] ?? '0', PDO::PARAM_STR);
             $stmt->bindValue(':DevPass', $data['DevPass'] ?? '0', PDO::PARAM_STR);
-            $stmt->bindValue(':AccessExpireDate', $data['AccessExpireDate'] ?? null, PDO::PARAM_STR);
+            $stmt->bindValue(':AccessExpireDate', $data['AccessExpireDate'] ?? date('Y-m-d H:i:s'));
             $stmt->bindValue(':UserFaceId', $data['UserFaceId'] ?? 0, PDO::PARAM_INT);
 
             return $stmt->execute();

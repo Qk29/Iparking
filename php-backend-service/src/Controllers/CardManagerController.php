@@ -25,6 +25,42 @@ class CardManagerController {
             return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
         }
     }
+
+    public function find(Request $request, Response $response, $args) {
+        $id = $args['id'];
+        $card = CardManager::findCard($id);
+        if ($card) {
+            $response->getBody()->write(json_encode($card));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Card not found']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+        }
+    }
+
+    public function update(Request $request, Response $response, $args) {
+        $id = $args['id'];
+        $data = $request->getParsedBody();
+        $result = CardManager::updateCard($id, $data);
+        if ($result) {
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+    }
+    public function delete(Request $request, Response $response, $args) {
+        $id = $args['id'];
+        $result = CardManager::deleteCard($id);
+        if ($result) {
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error', 'message' => 'Failed to delete card']));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+    }
 }
 
 ?>

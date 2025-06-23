@@ -76,6 +76,7 @@ $routes = [
     // Quản lý thẻ 
     'card-customer-manager' => 'pages/dashboard/card-manager/card-list.php',
     'add-card-manager' => 'pages/dashboard/card-manager/add-card-manager.php',
+    'update-card-manager' => 'pages/dashboard/card-manager/update-card-manager.php',
 
     
 ];

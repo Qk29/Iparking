@@ -96,12 +96,12 @@
 ?>
 
 
- <div class="container mt-4">
-    <h2>Quản lý thông tin</h2>
+ <div class="container">
+    <h2>Thêm mới thẻ</h2>
     <form action="" method="POST" enctype="multipart/form-data">
         <!-- Thống tin thẻ -->
     <div class="card mt-4">
-      <div class="card-header">Thông tin thẻ</div>
+      <div class="card-header bg-success text-white">Thông tin thẻ</div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
@@ -158,7 +158,7 @@
     </div>
     <!-- Thống tin chung -->
     <div class="card mt-4">
-      <div class="card-header">Thống tin chung</div>
+      <div class="card-header bg-success text-white">Thông tin xe</div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
@@ -195,7 +195,7 @@
 
     <!-- Thống tin khách hàng -->
     <div class="card mt-4">
-      <div class="card-header">Thống tin khách hàng</div>
+      <div class="card-header bg-success text-white">Thông tin khách hàng</div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
@@ -254,7 +254,7 @@
             <button type="submit" class="btn btn-success"><i class="fas fa-sync-alt"></i> Lưu</button>
             <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Lưu và thoát</button>
             <button type="reset" class="btn btn-secondary"><i class="fas fa-undo"></i> Nhập lại</button>
-            <a href="index.php?page=controller" class="btn btn-warning text-white"><i class="fas fa-arrow-left"></i> Quay lại</a>
+            <a href="index.php?page=card-customer-manager" class="btn btn-warning text-white"><i class="fas fa-arrow-left"></i> Quay lại</a>
     </div>
     
 </form>

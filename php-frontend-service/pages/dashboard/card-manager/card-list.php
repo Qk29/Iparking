@@ -5,7 +5,7 @@
     // call api to get card list
     $cardListApiUrl = 'http://localhost:8000/api/card-manager/card-list';
     $cardListResponse = apiRequest('GET', $cardListApiUrl);
-
+   
     $cardLists = json_decode($cardListResponse, true);
  
     // call api to get card groups 
@@ -20,25 +20,26 @@
     $customerGroupResponse = apiRequest('GET', $customerGroupApiUrl);
     $customerGroups = json_decode($customerGroupResponse, true);
 
-    // if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //     if (isset($_POST['delete_customer_id'])) {
-    //         $customerId = $_POST['delete_customer_id'];
-    //         $deleteLedApiUrl = 'http://localhost:8000/api/customer-manager/delete-customer/' . $customerId;
-    //         $response = apiRequest('DELETE', $deleteLedApiUrl);
-           
-    //         $responseData = json_decode($response, true);
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['delete_card_id'])) {
+            $cardId = $_POST['delete_card_id'];
+            $deleteCardApiUrl = 'http://localhost:8000/api/card-manager/delete-card/' . $cardId;
             
-    //         if (isset($responseData['status']) && $responseData['status'] === 'success') {
+            $response = apiRequest('DELETE', $deleteCardApiUrl);
+            
+            $responseData = json_decode($response, true);
+            
+            if (isset($responseData['status']) && $responseData['status'] === 'success') {
 
-    //             echo '<div class="alert alert-success">Xóa Customer thành công!</div>';
-    //             // reload the page 
-    //           echo '<script>setTimeout(function() { window.location.href = "index.php?page=customer"; }, 200);</script>';
+                echo '<div class="alert alert-success">Xóa thẻ thành công!</div>';
+                // reload the page 
+              echo '<script>setTimeout(function() { window.location.href = "index.php?page=card-customer-manager"; }, 200);</script>';
                 
-    //         } else {
-    //             echo '<div class="alert alert-danger">Lỗi khi xóa customer: ' . htmlspecialchars($responseData['message'] ?? 'Không rõ lỗi') . '</div>';
-    //         }
-    //     }
-    // }
+            } else {
+                echo '<div class="alert alert-danger">Lỗi khi xóa card: ' . htmlspecialchars($responseData['message'] ?? 'Không rõ lỗi') . '</div>';
+            }
+        }
+    }
 
 ?>
 <style>
@@ -52,7 +53,7 @@
 
    <div class="row mb-3">
     <div class="col-md-4">
-      <input id="searchInput" type="text" class="form-control" placeholder="Số thẻ, mã thẻ, mã khách hàng...">
+      <input id="searchInput" type="text" class="form-control" placeholder="số thẻ ...">
     </div>
     <div class="col-md-3" >
         <select class="form-select" name="customerSelect" id="customerSelect">
@@ -63,10 +64,10 @@
         </select>
     </div>
     <div class="col-md-3">
-        <select class="form-select" id="customerstatus" name="customerstatus">
+        <select class="form-select" id="cardstatus" name="cardstatus">
             <option value="">-- Trạng thái --</option>
             <option value="0">Đang sử dụng</option>
-            <<option value="2">Chưa sử dụng</option>
+            <option value="2">Chưa sử dụng</option>
             <option value="1">Đã khoá</option>
             <option value="3">Đã huỷ</option>
         </select>
@@ -138,7 +139,11 @@
       </thead>
       <tbody>
             <?php foreach ($pagedCards as $key => $card): ?>
-                <tr class="card-row">
+              
+                <tr class="card-row"
+                data-card-status="<?= htmlspecialchars($card['Status'] ?? '') ?>"
+                data-customer-group-id="<?= htmlspecialchars($card['CustomerGroupID'] ?? '') ?>"
+                data-card-group-id="<?= htmlspecialchars($card['CardGroupID'] ?? '') ?>">
 
                     <td class="card-no"><?= $card['CardNo'] ?></td>
                     <td class="card-number"><?= $card['CardNumber'] ?></td>  
@@ -161,23 +166,19 @@
                     <td>
                         <div class="d-flex align-items-center justify-content-center gap-2">
                           <!-- Sửa -->
-                          <a href="index.php?page=update-customer-manager&id=<?= $customer['CustomerID'] ?>" title="Sửa">
+                          <a href="index.php?page=update-card-manager&id=<?= $card['CardID'] ?>" title="Sửa">
                             <i class="ace-icon fa fa-pencil bigger-120" style="color:green;"></i>
                           </a>
 
                           <!-- Xóa -->
                           <form action="" method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa không?');">
-                            <input type="hidden" name="delete_customer_id" value="<?= $customer['CustomerID'] ?>">
+                            <input type="hidden" name="delete_card_id" value="<?= $card['CardID'] ?>">
                             <button type="submit" title="Xóa" style="border:none; background:none; cursor:pointer;">
                               <i class="ace-icon fa fa-trash bigger-120" style="color:red;"></i>
                             </button>
                           </form>
 
-                          <!-- Thẻ -->
-                          <a href="index.php?page=card-customer-manager&id=<?= $customer['CustomerID'] ?>" title="Thẻ" target="_blank">
-                            <i class="fa fa-credit-card warning"></i>
-                          </a>
-                        </div>
+                          
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -225,36 +226,35 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function(){
+$(document).ready(function(){
     $('#searchButton').on('click', function(){
-      var searchTerm = $('#searchInput').val().toLowerCase();
-      var selectedCustomer = $('#customerSelect').val();
-      var selectedstatus = $('#customerstatus').val();
-      var cardGroupSelected = $('#cardGroupSelect').val();
-      $('.card-row').each(function(){
-
-        var customerNo = $(this).find('.card-no').text().toLowerCase();
-        var cardNumber = $(this).find('.card-number').text().toLowerCase();
-        var cardGroupName = $(this).find('.card-group-name').text().toLowerCase();
-        var customerGroupID = $(this).data('customer-group-id').toString();
-
-        var cardStatus = $(this).data('card-status').toString();
+        var searchTerm = $('#searchInput').val().toLowerCase();
+        var selectedCustomer = $('#customerSelect').val();
+        var selectedStatus = $('#cardstatus').val();
+        var cardGroupSelected = $('#cardGroupSelect').val();
         
-        var matchesSearch = customerName.includes(searchTerm);
-        var matchesCustomer = selectedCustomer === '#' || selectedCustomer === customerGroupID;
-        var matchesStatus = selectedstatus === '' || selectedstatus == customerStatus;
-        if (matchesSearch && matchesCustomer && matchesStatus) {
-          $(this).show();
-        } else {
-          $(this).hide();
-        } 
         
-      });
+        $('.card-row').each(function(){
+            var cardNo = $(this).find('.card-no').text().toLowerCase();
+            var customerGroupID = $(this).data('customer-group-id').toString();
+            var cardStatus = $(this).data('card-status').toString();
+            var cardGroupID = $(this).data('card-group-id').toString();
+            
+            var matchesSearch = searchTerm === '' || cardNo.includes(searchTerm);
+            var matchesCustomer = selectedCustomer === '' || selectedCustomer === customerGroupID;
+            var matchesStatus = selectedStatus === '' || selectedStatus === cardStatus;
+            var matchesCardGroup = cardGroupSelected === '' || cardGroupSelected === cardGroupID;
+
+            if (matchesSearch && matchesCustomer && matchesStatus &&   matchesCardGroup) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
     });
 
-    // Nút nạp lại
     $('#reloadButton').on('click', function () {
-      location.reload();
+        location.reload();
     });
-  });
+});
 </script>

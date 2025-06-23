@@ -80,6 +80,26 @@
 
 
 <div class="table-responsive">
+  <?php 
+        // Tổng số khách hàng
+        $totalCustomers = count($customers);
+
+        // Số bản ghi mỗi trang
+        $perPage = 10;
+
+        // Tính tổng số trang
+        $totalPages = ceil($totalCustomers / $perPage);
+
+        // Lấy trang hiện tại từ URL (mặc định là 1)
+        $currentPage = isset($_GET['pagination']) ? (int) $_GET['pagination'] : 1;
+        if ($currentPage < 1) $currentPage = 1;
+
+        // Tính chỉ số bắt đầu
+        $startIndex = ($currentPage - 1) * $perPage;
+
+        // Cắt mảng theo trang
+        $pagedCustomers = array_slice($customers, $startIndex, $perPage);
+    ?>
     <table class="table table-bordered table-hover text-center">
       <thead class="table-light">
         
@@ -96,9 +116,10 @@
         </tr>
       </thead>
       <tbody>
-            <?php foreach ($customers as $key => $customer): ?>
+        
+            <?php foreach ($pagedCustomers as $key => $customer): ?>
                 <tr class="customer-row" data-customer-group-id="<?= $customer['CustomerGroupID'] ?>" data-customer-status="<?= $customer['Inactive'] ?>">
-                    <td><?= $key + 1 ?></td>
+                    <td><?= ($startIndex + $key + 1) ?></td>
                     <td><?= $customer['CustomerCode'] ?></td>
                     <td class="customer-name"><?= $customer['CustomerName'] ?></td>
                     <td><?= $customer['Mobile'] ?></td>
@@ -138,6 +159,42 @@
               
       </tbody>
     </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+
+        <!-- Previous -->
+        <?php if ($currentPage > 1): ?>
+        <li class="page-item">
+            <a class="page-link" href="?page=customer&pagination=<?= $currentPage - 1 ?>">« Previous</a>
+        </li>
+        <?php endif; ?>
+
+        <?php
+        $range = 1; // Hiển thị các trang xung quanh current page
+        $start = max(1, $currentPage - $range);
+        $end = min($totalPages - 1, $currentPage + $range);
+
+        for ($i = $start; $i <= $end; $i++):
+        ?>
+        <li class="page-item <?= $i == $currentPage ? 'active' : '' ?>">
+            <a class="page-link" href="?page=customer&pagination=<?= $i ?>"><?= $i ?></a>
+        </li>
+        <?php endfor; ?>
+
+        <!-- Dấu "..." nếu còn trang cuối -->
+        <?php if ($end < $totalPages - 1): ?>
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+        <?php endif; ?>
+
+        <!-- Next -->
+        <?php if ($currentPage < $totalPages): ?>
+        <li class="page-item">
+            <a class="page-link" href="?page=customer&pagination=<?= $currentPage + 1 ?>">Next »</a>
+        </li>
+        <?php endif; ?>
+
+    </ul>
+    </nav>
   </div>
 
 </div>
