@@ -131,7 +131,13 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $cardManager->get('/find-card/{id}', \App\Controllers\CardManagerController::class . ':find');
         $cardManager->put('/update-card/{id}', \App\Controllers\CardManagerController::class . ':update');
         $cardManager->delete('/delete-card/{id}', \App\Controllers\CardManagerController::class . ':delete');
-    })->add(new \App\Middleware\AuthMiddleware());
+
+        $cardManager->post('/bulk-update-lock', \App\Controllers\CardManagerController::class . ':bulkUpdateLock');
+        $cardManager->post('/bulk-update-unlock', \App\Controllers\CardManagerController::class . ':bulkUpdateUnlock');
+
+        $cardManager->post('/renew-cards', \App\Controllers\CardManagerController::class . ':renewCards');
+        $cardManager->post('/activate-cards', \App\Controllers\CardManagerController::class . ':activateCards');
+    })->add(new \App\Middleware\AuthMiddleware());  
 
     // route vehicle-group
     $group->group('/vehicle-group', function (RouteCollectorProxy $vehicleGroup) {

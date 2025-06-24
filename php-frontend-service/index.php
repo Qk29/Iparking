@@ -10,6 +10,7 @@ $routes = [
 
     // Báo cáo
     'car-in' =>'pages/dashboard/report/car-in.php',
+    
 
 
     // Hệ thống
@@ -77,6 +78,10 @@ $routes = [
     'card-customer-manager' => 'pages/dashboard/card-manager/card-list.php',
     'add-card-manager' => 'pages/dashboard/card-manager/add-card-manager.php',
     'update-card-manager' => 'pages/dashboard/card-manager/update-card-manager.php',
+
+    'renew-card' => 'pages/dashboard/card-manager/renew-card.php',
+    'renewed-card' => 'pages/dashboard/card-manager/renewed-card.php',
+    'activate-card' => 'pages/dashboard/card-manager/activate-card.php',
 
     
 ];

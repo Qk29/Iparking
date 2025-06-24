@@ -61,6 +61,57 @@ class CardManagerController {
             return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
         }
     }
+    public function bulkUpdateLock(Request $request, Response $response, $args) {
+        $data = $request->getParsedBody();
+        $result = CardManager::bulkUpdateLockModel($data);
+        if ($result) {
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+    }
+
+    public function bulkUpdateUnlock(Request $request, Response $response, $args) {
+        $data = $request->getParsedBody();
+        $result = CardManager::bulkUpdateUnlockModel($data);
+        if ($result) {
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+    }
+
+    public function renewCards(Request $request, Response $response, $args) {
+        $data = $request->getParsedBody();
+         error_log("DỮ LIỆU GỬI LÊN:");
+        error_log(print_r($data, true)); // in ra file log PHP
+        $result = CardManager::renewCardsModel($data);
+        if ($result) {
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+    }
+
+    public function activateCards(Request $request, Response $response, $args) {
+        $data = $request->getParsedBody();
+        error_log("DỮ LIỆU GỬI LÊN:");
+        error_log(print_r($data, true)); // in ra file log PHP
+        $result = CardManager::activateCardsModel($data);
+        if ($result) {
+            $response->getBody()->write(json_encode(['status' => 'success']));
+            return $response->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode(['status' => 'error']));
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
+    }
 }
 
 ?>

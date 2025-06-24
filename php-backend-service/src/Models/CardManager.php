@@ -33,13 +33,13 @@ class CardManager {
             $db = Database::getInstance();
             $sql = "INSERT INTO [tblCard] (
                         CardNo, CardGroupID, Description, CardNumber,
-                        DateRegister, DateRelease, ImportDate, ExpireDate, IsLock,
+                        DateRegister, DateActive, ImportDate, ExpireDate, IsLock,
                         Plate1, Plate2, Plate3,
                         VehicleName1, VehicleName2, VehicleName3,
                         CustomerID
                     ) VALUES (
                         :CardNo, :CardGroupID, :Description, :CardNumber,
-                        :DateRegister, :DateRelease, :ImportDate, :ExpireDate, :IsLock,
+                        :DateRegister, :DateActive, :ImportDate, :ExpireDate, :IsLock,
                         :Plate1, :Plate2, :Plate3,
                         :VehicleName1, :VehicleName2, :VehicleName3,
                         :CustomerID
@@ -53,7 +53,7 @@ class CardManager {
                 ':Description' => $data['Description'],
                 ':CardNumber' => $data['CardNumber'],
                 ':DateRegister' => $data['DateRegister'],
-                ':DateRelease' => $data['DateRelease'],
+                ':DateActive' => $data['DateActive'],
                 ':ImportDate' => $data['ImportDate'],
                 ':ExpireDate' => $data['ExpireDate'],
                 ':IsLock' => $data['IsLock'],
@@ -157,6 +157,143 @@ class CardManager {
         }
     }
 
+    public static function bulkUpdateLockModel($data) {
+    try {
+        $db = Database::getInstance();
+        
+        $cardIds = $data['card_ids']; // lưu ý key là 'card_ids' giống bên PHP gọi API
+        $isLock = $data['is_lock'];
+
+        if (empty($cardIds) || !is_array($cardIds)) {
+            return false;
+        }
+
+        // Tạo các placeholder kiểu :id0, :id1,...
+        $placeholders = [];
+        foreach ($cardIds as $index => $cardId) {
+            $placeholders[] = ":id$index";
+        }
+
+        $sql = "UPDATE [tblCard] SET IsLock = :IsLock WHERE CardID IN (" . implode(",", $placeholders) . ")";
+        $stmt = $db->prepare($sql);
+
+        // Bind biến IsLock
+        $stmt->bindValue(':IsLock', $isLock, PDO::PARAM_INT);
+
+        // Bind từng CardID theo placeholder
+        foreach ($cardIds as $index => $cardId) {
+            $stmt->bindValue(":id$index", $cardId);
+        }
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Error bulk updating lock model: " . $e->getMessage());
+        return false;
+    }
+}
+
+public static function bulkUpdateUnlockModel($data) {
+    try {
+        $db = Database::getInstance();
+        
+        $cardIds = $data['card_ids']; // lưu ý key là 'card_ids' giống bên PHP gọi API
+        $isLock = $data['is_lock'];
+
+        if (empty($cardIds) || !is_array($cardIds)) {
+            return false;
+        }
+
+        // Tạo các placeholder kiểu :id0, :id1,...
+        $placeholders = [];
+        foreach ($cardIds as $index => $cardId) {
+            $placeholders[] = ":id$index";
+        }
+
+        $sql = "UPDATE [tblCard] SET IsLock = :IsLock WHERE CardID IN (" . implode(",", $placeholders) . ")";
+        $stmt = $db->prepare($sql);
+
+        // Bind biến IsLock
+        $stmt->bindValue(':IsLock', $isLock, PDO::PARAM_INT);
+
+        // Bind từng CardID theo placeholder
+        foreach ($cardIds as $index => $cardId) {
+            $stmt->bindValue(":id$index", $cardId);
+        }
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Error bulk updating unlock model: " . $e->getMessage());
+        return false;
+    }
+}
+
+    public static function renewCardsModel($data) {
+        try {
+            $db = Database::getInstance();
+            $cardIds = $data['cardIds']; 
+            $newExpireDate = $data['newExpireDate'];
+
+            if (empty($cardIds) || !is_array($cardIds)) {
+                return false;
+            }
+
+            // Tạo các placeholder kiểu :id0, :id1,...
+            $placeholders = [];
+            foreach ($cardIds as $index => $cardId) {
+                $placeholders[] = ":id$index";
+            }
+
+            $sql = "UPDATE [tblCard] SET ExpireDate = :ExpireDate WHERE CardID IN (" . implode(",", $placeholders) . ")";
+            $stmt = $db->prepare($sql);
+
+            // Bind biến ExpireDate
+            $stmt->bindValue(':ExpireDate', $newExpireDate, PDO::PARAM_STR);
+
+            // Bind từng CardID theo placeholder
+            foreach ($cardIds as $index => $cardId) {
+                $stmt->bindValue(":id$index", $cardId);
+            }
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Error renewing cards: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function activateCardsModel($data) {
+        try {
+            $db = Database::getInstance();
+            $cardIds = $data['cardIds']; 
+            $newDateActive = $data['newDateActive'];
+
+            if (empty($cardIds) || !is_array($cardIds)) {
+                return false;
+            }
+
+            // Tạo các placeholder kiểu :id0, :id1,...
+            $placeholders = [];
+            foreach ($cardIds as $index => $cardId) {
+                $placeholders[] = ":id$index";
+            }
+
+            $sql = "UPDATE [tblCard] SET DateActive = :DateActive WHERE CardID IN (" . implode(",", $placeholders) . ")";
+            $stmt = $db->prepare($sql);
+
+            // Bind biến DateActive
+            $stmt->bindValue(':DateActive', $newDateActive, PDO::PARAM_STR);
+
+            // Bind từng CardID theo placeholder
+            foreach ($cardIds as $index => $cardId) {
+                $stmt->bindValue(":id$index", $cardId);
+            }
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Error activating cards: " . $e->getMessage());
+            return false;
+        }
+    }
 
 
 }

@@ -159,17 +159,40 @@
                       <li class="nav-item">
                         <a href="html/horizontal.html" class="nav-link">
                           <span class="nav-text">
-               				  <span>Báo cáo lượt xe ra vào miễn phí</span>
+               				  <span>Lượt xe ra vào miễn phí</span>
                           </span>
                         </a>
                       </li>
 
                       <li class="nav-item">
-                        <a href="html/two-menus-1.html" class="nav-link">
+                        <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                           <span class="nav-text">
                				  <span>Xử lí thẻ</span>
                           </span>
+                          <b class="caret fa fa-angle-left rt-n90"></b>
                         </a>
+
+                        <div class="submenu collapse">
+                          <ul class="submenu-inner">
+
+                            <li class="nav-item">
+                              <a href="index.php?page=card-issue" class="nav-link">
+                                <span class="nav-text">
+                                  <span>Chi tiết xử lý thẻ</span>
+                                </span>
+                              </a>
+                            </li>
+
+                             <li class="nav-item">
+                              <a href="index.php?page=card-issue" class="nav-link">
+                                <span class="nav-text">
+                                  <span>Báo cáo tổng hợp xử lý thẻ</span>
+                                </span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                            
                       </li>
 
                       <li class="nav-item">
@@ -189,11 +212,8 @@
                       </li>
                     </ul>
                   </div>
-
                   <b class="sub-arrow"></b>
-
                 </li>
-
 
                 <li class="nav-item">
 
@@ -202,68 +222,20 @@
                     <span class="nav-text fadeable">
                	  <span>Biểu đồ</span>
                     </span>
-
                     <b class="caret fa fa-angle-left rt-n90"></b>
-
-                    <!-- or you can use custom icons. first add `d-style` to 'A' -->
-                    <!--
-               	 	<b class="caret d-n-collapsed fa fa-minus text-80"></b>
-               	 	<b class="caret d-collapsed fa fa-plus text-80"></b>
-               	 -->
                   </a>
 
                   <div class="hideable submenu collapse">
                     <ul class="submenu-inner">
                       
-
-
                       <li class="nav-item">
-
                         <a href="html/icons.html" class="nav-link">
-
                           <span class="nav-text">
                				  <span>Icons</span>
                           </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-
-                        <a href="html/typography.html" class="nav-link">
-
-                          <span class="nav-text">
-               				  <span>Typography</span>
-                          </span>
-
-
-                        </a>
-
-
-                      </li>
-
-
-                      <li class="nav-item">
-                        <a href="html/charts.html" class="nav-link">
-                          <span class="nav-text">
-               				  <span>Charts</span>
-                          </span>
-                        </a>
-
-
-                      </li>
-
-                      <li class="nav-item">
-                        <a href="html/treeview.html" class="nav-link">
-                          <span class="nav-text">
-               				  <span>Treeview</span>
-                          </span>
                         </a>
                       </li>
+
                     </ul>
                   </div>
 
@@ -292,22 +264,51 @@
                				  <span>Danh sách thẻ</span>
                           </span>
                         </a>
+                        
                       </li>
 
                       <li class="nav-item">
-                        <a href="html/table-datatables.html" class="nav-link">
+                        <a href="" class="nav-link dropdown-toggle collapsed" >
                           <span class="nav-text">
-               				  <span>DataTables</span>
+               				  <span>Gia hạn thẻ</span>
                           </span>
+                          <b class="caret fa fa-angle-left rt-n90"></b>
                         </a>
+                          <div class=" submenu collapse">
+                          <ul class="submenu-inner">
+
+                          <li class="nav-item">
+                            <a href="index.php?page=renew-card" class="nav-link">
+                              <span class="menu-text">
+                                <i class="fas fa-caret-right mr-1 "></i>
+                              <span>Gia hạn thẻ mới</span>
+                              
+                              </span>
+                              
+                            </a>
+                            
+                          </li>
+                          <li class="nav-item">
+                            <a href="index.php?page=renewed-card" class="nav-link">
+                              <span class="menu-text">
+                                <i class="fas fa-caret-right mr-1 "></i>
+                              <span>Ds thẻ đã gia hạn</span>
+                              
+                              </span>
+                              
+                            </a>
+                            
+                          </li>
+                          </ul>
+                        </div>
                       </li>
 
                       <li class="nav-item">
 
-                        <a href="html/table-bootstrap.html" class="nav-link">
+                        <a href="index.php?page=activate-card" class="nav-link">
 
                           <span class="nav-text">
-               				  <span>Bootstrap Table</span>
+               				  <span>Kích hoạt thẻ</span>
                           </span>
 
 
