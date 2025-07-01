@@ -275,7 +275,11 @@ function LockCardSelected(action) {
                 card_ids: selectedCards
             },
             success: function(response) {
-                // Page will reload automatically due to PHP script
+                 // Hiển thị thông báo và reload sau 0.5s
+                alert('Đã ' + (action === 'lock' ? 'khoá' : 'mở khoá') + ' các thẻ thành công!');
+                setTimeout(function() {
+                    location.reload();
+                }, 500);
             },
             error: function() {
                 alert('Lỗi kết nối đến server.');

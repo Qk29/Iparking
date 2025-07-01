@@ -176,7 +176,7 @@
                           <ul class="submenu-inner">
 
                             <li class="nav-item">
-                              <a href="index.php?page=card-issue" class="nav-link">
+                              <a href="index.php?page=process-card-detail" class="nav-link">
                                 <span class="nav-text">
                                   <span>Chi tiết xử lý thẻ</span>
                                 </span>
@@ -184,7 +184,7 @@
                             </li>
 
                              <li class="nav-item">
-                              <a href="index.php?page=card-issue" class="nav-link">
+                              <a href="index.php?page=process-card-issue" class="nav-link">
                                 <span class="nav-text">
                                   <span>Báo cáo tổng hợp xử lý thẻ</span>
                                 </span>

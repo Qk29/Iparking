@@ -215,14 +215,17 @@ function ActivateCards(){
         }
 
         // Gửi yêu cầu Kích hoạt thẻ
+         const USER_ID = <?= $_SESSION['user_id'] ?? 1 ?>;
         $.ajax({
             url: 'http://localhost:8000/api/card-manager/activate-cards',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                cardIds: selectedCards,
-                newDateActive: newDateActive
+                cardids: selectedCards,
+                newDateActive: newDateActive,
+                UserID: USER_ID // Thêm UserID vào dữ liệu gửi đi
             }),
+            
             success: function(response) {
                 alert('Kích hoạt thành công!');
                 location.reload(); // Nạp lại trang sau khi Kích hoạt
@@ -248,13 +251,15 @@ function ActivateCards(){
             return;
         }
         // Gửi yêu cầu Kích hoạt thẻ
+        const USER_ID = <?= $_SESSION['user_id'] ?? 1 ?>;
         $.ajax({
             url: 'http://localhost:8000/api/card-manager/activate-cards',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                cardIds: selectedCards,
-                newDateActive: newDateActive
+                cardids: selectedCards,
+                newDateActive: newDateActive,
+                UserID: USER_ID // Thêm UserID vào dữ liệu gửi đi
             }),
             success: function(response) {
                 alert('Kích hoạt thành công!');

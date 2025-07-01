@@ -8,6 +8,13 @@ use Slim\Routing\RouteCollectorProxy;
 $app->group('/api', function (RouteCollectorProxy $group) {
     $group->post('/login', \App\Controllers\AuthController::class . ':login');
 
+
+    // route report
+    $group->group('/report', function (RouteCollectorProxy $reportGroup) {
+        $reportGroup->get('/card-process-detail', \App\Controllers\CardProcessController::class . ':cardProcessDetail');
+        $reportGroup->get('/process-card-issue', \App\Controllers\CardProcessController::class . ':CardIssueSummary');
+    })->add(new \App\Middleware\AuthMiddleware());
+
     // route user
     $group->group('/users', function (RouteCollectorProxy $userGroup) {
         $userGroup->get('', \App\Controllers\UserController::class . ':index');
@@ -61,6 +68,9 @@ $app->group('/api', function (RouteCollectorProxy $group) {
 
     // route equipment
     $group->group('/equipment', function (RouteCollectorProxy $equipmentGroup) {
+
+        
+
         // route gate
         $equipmentGroup->get('/gate-list', \App\Controllers\GateController::class . ':index');
         $equipmentGroup->post('/add-gate', \App\Controllers\GateController::class . ':create');

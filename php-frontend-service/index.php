@@ -10,8 +10,8 @@ $routes = [
 
     // Báo cáo
     'car-in' =>'pages/dashboard/report/car-in.php',
-    
-
+    'process-card-detail' => 'pages/dashboard/report/process-card/process-card-detail.php',
+    'process-card-issue' => 'pages/dashboard/report/process-card/process-card-issue.php',
 
     // Hệ thống
     'user-system' => 'pages/dashboard/system/user.php',

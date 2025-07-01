@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Models\CardManager;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\helpers\CardProcessLogger;
 
 class CardManagerController {
     
@@ -15,9 +16,14 @@ class CardManagerController {
     // Add other methods for creating, updating, and deleting customers as needed
     public function create(Request $request, Response $response, $args) {
         $data = $request->getParsedBody();
-        error_log(json_encode($data));
+        // error_log(json_encode($data));
         $result = CardManager::addCard($data);
         if ($result) {
+            // Log the action
+            $cardId = $result ?? null;
+            if ($cardId) {
+                CardProcessLogger::logAction($cardId, 'ADD', $data['UserID'] ?? null, 'Card created successfully');
+            }
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withStatus(201)->withHeader('Content-Type', 'application/json');
         } else {
@@ -52,8 +58,13 @@ class CardManagerController {
     }
     public function delete(Request $request, Response $response, $args) {
         $id = $args['id'];
+        // lấy thông tin thẻ trước khi xoá
+        $cardInfo = CardManager::findCard($id);
         $result = CardManager::deleteCard($id);
         if ($result) {
+            // Log the action
+            CardProcessLogger::logAction($id, 'DELETE', $request->getAttribute('userId'), 'Card deleted successfully',$cardInfo);
+
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withHeader('Content-Type', 'application/json');
         } else {
@@ -65,6 +76,11 @@ class CardManagerController {
         $data = $request->getParsedBody();
         $result = CardManager::bulkUpdateLockModel($data);
         if ($result) {
+            // Log the action for each card
+            foreach ($data['cardids'] as $cardId) {
+                error_log("[CARD PROCESS LOG] About to call logAction for cardId=$cardId, action=LOCK");
+                CardProcessLogger::logAction($cardId, 'LOCK', $data['UserID'] ?? null, 'Card locked successfully');
+            }
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withHeader('Content-Type', 'application/json');
         } else {
@@ -77,6 +93,11 @@ class CardManagerController {
         $data = $request->getParsedBody();
         $result = CardManager::bulkUpdateUnlockModel($data);
         if ($result) {
+            // Log the action for each card
+            foreach ($data['cardids'] as $cardId) {
+                error_log("[CARD PROCESS LOG] About to call logAction for cardId=$cardId, action=UNLOCK");
+                CardProcessLogger::logAction($cardId, 'UNLOCK', $data['UserID'] ?? null, 'Card unlocked successfully');
+            }
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withHeader('Content-Type', 'application/json');
         } else {
@@ -87,10 +108,13 @@ class CardManagerController {
 
     public function renewCards(Request $request, Response $response, $args) {
         $data = $request->getParsedBody();
-         error_log("DỮ LIỆU GỬI LÊN:");
-        error_log(print_r($data, true)); // in ra file log PHP
+        
         $result = CardManager::renewCardsModel($data);
         if ($result) {
+            // Log the action for each card
+            foreach ($data['cardids'] as $cardId) {
+                CardProcessLogger::logAction($cardId, 'RENEW', $data['UserID'] ?? null, 'Card renewed successfully');
+            }
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withHeader('Content-Type', 'application/json');
         } else {
@@ -101,10 +125,18 @@ class CardManagerController {
 
     public function activateCards(Request $request, Response $response, $args) {
         $data = $request->getParsedBody();
-        error_log("DỮ LIỆU GỬI LÊN:");
-        error_log(print_r($data, true)); // in ra file log PHP
+        
+        error_log("[DEBUG] activateCards received data: " . json_encode($data));
         $result = CardManager::activateCardsModel($data);
+       
         if ($result) {
+           
+            // Log the action for each card
+            foreach ($data['cardids'] as $cardId) {
+                
+                CardProcessLogger::logAction($cardId, 'ACTIVATE', $data['UserID'] ?? null, 'Card activated successfully');
+               
+            }
             $response->getBody()->write(json_encode(['status' => 'success']));
             return $response->withHeader('Content-Type', 'application/json');
         } else {

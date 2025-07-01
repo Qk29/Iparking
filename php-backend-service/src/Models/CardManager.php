@@ -33,13 +33,13 @@ class CardManager {
             $db = Database::getInstance();
             $sql = "INSERT INTO [tblCard] (
                         CardNo, CardGroupID, Description, CardNumber,
-                        DateRegister, DateActive, ImportDate, ExpireDate, IsLock,
+                        DateRegister, DateRelease, ImportDate, ExpireDate, IsLock,
                         Plate1, Plate2, Plate3,
                         VehicleName1, VehicleName2, VehicleName3,
                         CustomerID
                     ) VALUES (
                         :CardNo, :CardGroupID, :Description, :CardNumber,
-                        :DateRegister, :DateActive, :ImportDate, :ExpireDate, :IsLock,
+                        :DateRegister, :DateRelease, :ImportDate, :ExpireDate, :IsLock,
                         :Plate1, :Plate2, :Plate3,
                         :VehicleName1, :VehicleName2, :VehicleName3,
                         :CustomerID
@@ -53,7 +53,7 @@ class CardManager {
                 ':Description' => $data['Description'],
                 ':CardNumber' => $data['CardNumber'],
                 ':DateRegister' => $data['DateRegister'],
-                ':DateActive' => $data['DateActive'],
+                ':DateRelease' => $data['DateRelease'],
                 ':ImportDate' => $data['ImportDate'],
                 ':ExpireDate' => $data['ExpireDate'],
                 ':IsLock' => $data['IsLock'],
@@ -66,7 +66,11 @@ class CardManager {
                 ':CustomerID' => $data['CustomerID']
             ]);
 
-                return true;
+                // Truy vấn lại CardID vừa thêm dựa vào CardNumber (giả sử CardNumber là duy nhất)
+                $stmt2 = $db->prepare("SELECT CardID FROM [tblCard] WHERE CardNumber = :CardNumber ORDER BY DateRegister DESC");
+                $stmt2->execute([':CardNumber' => $data['CardNumber']]);
+                $row = $stmt2->fetch(PDO::FETCH_ASSOC);
+                return $row ? $row['CardID'] : false;
             } catch (PDOException $e) {
                 error_log("Error adding card: " . $e->getMessage());
                 return false;
@@ -150,7 +154,7 @@ class CardManager {
             $sql = "DELETE FROM [tblCard] WHERE CardID = :id";
             $stmt = $db->prepare($sql);
             $stmt->execute([':id' => $id]);
-            return true;
+            return $stmt->rowCount() > 0; // Trả về true nếu có ít nhất 1 dòng bị xóa
         } catch (PDOException $e) {
             error_log("Error deleting card: " . $e->getMessage());
             return false;
@@ -185,7 +189,8 @@ class CardManager {
             $stmt->bindValue(":id$index", $cardId);
         }
 
-        return $stmt->execute();
+        $stmt->execute();
+        return $cardIds; // Trả về danh sách CardID đã cập nhật
     } catch (PDOException $e) {
         error_log("Error bulk updating lock model: " . $e->getMessage());
         return false;
@@ -220,7 +225,8 @@ public static function bulkUpdateUnlockModel($data) {
             $stmt->bindValue(":id$index", $cardId);
         }
 
-        return $stmt->execute();
+        $stmt->execute();
+        return $cardIds; // Trả về danh sách CardID đã cập nhật
     } catch (PDOException $e) {
         error_log("Error bulk updating unlock model: " . $e->getMessage());
         return false;
@@ -254,7 +260,8 @@ public static function bulkUpdateUnlockModel($data) {
                 $stmt->bindValue(":id$index", $cardId);
             }
 
-            return $stmt->execute();
+            $stmt->execute();
+            return $cardIds; // Trả về danh sách CardID đã cập nhật
         } catch (PDOException $e) {
             error_log("Error renewing cards: " . $e->getMessage());
             return false;
@@ -264,7 +271,8 @@ public static function bulkUpdateUnlockModel($data) {
     public static function activateCardsModel($data) {
         try {
             $db = Database::getInstance();
-            $cardIds = $data['cardIds']; 
+            $cardIds = $data['cardids']; 
+            error_log("[DEBUG] activateCardsModel received cardIds: " . json_encode($cardIds));
             $newDateActive = $data['newDateActive'];
 
             if (empty($cardIds) || !is_array($cardIds)) {
@@ -288,7 +296,8 @@ public static function bulkUpdateUnlockModel($data) {
                 $stmt->bindValue(":id$index", $cardId);
             }
 
-            return $stmt->execute();
+            $stmt->execute();
+            return $cardIds; // Trả về danh sách CardID đã cập nhật
         } catch (PDOException $e) {
             error_log("Error activating cards: " . $e->getMessage());
             return false;
