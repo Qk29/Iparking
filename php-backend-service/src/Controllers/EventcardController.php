@@ -60,4 +60,94 @@ class EventCardController {
         }
         
     }
+    public function vehicleInDetail(Request $request, Response $response): Response{
+        try {
+            $params = (array) $request->getQueryParams();
+            $timeSearch = $params['time_search'] ?? null;
+            $vehicleInDetail = $this->eventCardModel->getVehiclesInDetail($timeSearch);
+            $response->getBody()->write(json_encode($vehicleInDetail));
+            return $response->withHeader('Content-Type', 'application/json');
+            
+        }catch (\Exception $e) {
+            error_log("Error: " . $e->getMessage());
+            $response->getBody()->write($e->getMessage());
+            return $response->withStatus(500)
+                    ->withHeader('Content-Type', 'text/plain');
+        }
+    }
+
+    public function getCurrentVehiclesIn(Request $request, Response $response): Response {
+    try {
+        $params = $request->getQueryParams();
+
+        // Chuẩn hóa giá trị truyền vào
+        $filters = [
+            'from_date' => isset($params['from_date']) ? date('Y-m-d H:i:s', strtotime($params['from_date'])) : null,
+            'to_date' => isset($params['to_date']) ? date('Y-m-d H:i:s', strtotime($params['to_date'])) : null,
+            'customer_group' => $params['customer_group'] ?? null,
+            'card_group' => $params['card_group'] ?? null,
+            'lane' => $params['lane'] ?? null,
+            'keyword' => $params['keyword'] ?? null
+        ];
+
+        $data = $this->eventCardModel->getCurrentVehiclesIn($filters);
+
+        $response->getBody()->write(json_encode([
+            'success' => true,
+            'data' => $data
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+    } catch (\Exception $e) {
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]));
+        return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+    }
+}
+
+public function getVehicleIn(Request $request, Response $response): Response {
+    try {
+         $params = $request->getQueryParams();
+          error_log("Full params: " . print_r($params, true));
+        $from = $params['from_date'] ?? null;
+        $to = $params['to_date'] ?? null;
+        $customerGroupID = $params['customerSelect'] ?? null;
+        $cardGroupID = $params['cardGroupSelect'] ?? null;
+        $search = $params['search'] ?? null;
+
+        // Chuyển đổi định dạng ngày nếu có ký tự 'T'
+        if ($from && strpos($from, 'T') !== false) {
+            $from = date('Y-m-d H:i:s', strtotime($from));
+        }
+        if ($to && strpos($to, 'T') !== false) {
+            $to = date('Y-m-d H:i:s', strtotime($to));
+        }
+
+        error_log("From: $from, To: $to, Customer Group ID: $customerGroupID, Card Group ID: $cardGroupID, Search: $search");
+        // Gọi model xử lý lọc
+        $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
+        $limit = isset($params['limit']) ? (int)$params['limit'] : 20;
+        $results = $this->eventCardModel->getFilteredVehicleIn($from, $to, $customerGroupID, $cardGroupID, $search, $offset, $limit);
+
+        $response->getBody()->write(json_encode([
+            'success' => true,
+            'data' => $results
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+
+        
+
+    } catch (\Exception $e) {
+        error_log("Error: " . $e->getMessage());
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'data' => []
+        ]));
+        return $response->withStatus(500)
+                ->withHeader('Content-Type', 'application/json');
+    }
+}
+
 }

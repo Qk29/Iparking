@@ -110,7 +110,7 @@
                           </li>
 
                           <li class="nav-item">
-                            <a href="html/chi-tiet-xe-trong-bai.html" class="nav-link">
+                            <a href="index.php?page=car-in-detail" class="nav-link">
                               <span class="nav-text">
                                 <span>Chi tiết xe trong bãi</span>
                               </span>
@@ -138,7 +138,7 @@
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="javascript:void(0)" class="nav-link">
+                            <a href="index.php?page=xe-vao" class="nav-link">
                               <span class="nav-text">
                                 <span>Xe vào bãi</span>
                               </span>
@@ -204,11 +204,32 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="html/landing-page-2.html" class="nav-link">
+                        <a href="javascript:void(0)" class="nav-link dropdown-toggle collapsed">
                           <span class="nav-text">
                				  <span>Thẻ theo căn hộ</span>
                           </span>
+                          <b class="caret fa fa-angle-left rt-n90"></b>
                         </a>
+                        <div class="submenu collapse">
+                          <ul class="submenu-inner">
+
+                            <li class="nav-item">
+                              <a href="index.php?page=apartment-report-detail" class="nav-link">
+                                <span class="nav-text">
+                                  <span>Báo cáo chi tiết</span>
+                                </span>
+                              </a>
+                            </li>
+
+                            <li class="nav-item">
+                              <a href="index.php?page=apartment-report-compile" class="nav-link">
+                                <span class="nav-text">
+                                  <span>Báo cáo tổng hợp</span>
+                                </span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
                       </li>
                     </ul>
                   </div>

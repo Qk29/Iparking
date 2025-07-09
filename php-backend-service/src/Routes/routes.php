@@ -13,6 +13,7 @@ $app->group('/api', function (RouteCollectorProxy $group) {
     $group->group('/report', function (RouteCollectorProxy $reportGroup) {
         $reportGroup->get('/card-process-detail', \App\Controllers\CardProcessController::class . ':cardProcessDetail');
         $reportGroup->get('/process-card-issue', \App\Controllers\CardProcessController::class . ':CardIssueSummary');
+        $reportGroup->get('/vehicle-in', \App\Controllers\EventCardController::class . ':getVehicleIn');
     })->add(new \App\Middleware\AuthMiddleware());
 
     // route user
@@ -24,10 +25,17 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $userGroup->put('/{id}/change-password', \App\Controllers\UserController::class . ':changePassword');
     })->add(new \App\Middleware\AuthMiddleware());
 
-    
+
     // route card-event
+    $group->group('/card-event', function (RouteCollectorProxy $cardEventGroup) {
+        $cardEventGroup->get('/event-cards', \App\Controllers\EventCardController::class . ':index');
+        $cardEventGroup->get('/get-vehicle-in', \App\Controllers\EventCardController::class . ':vehicleInDetail');
+        $cardEventGroup->post('/vehicle-in', \App\Controllers\EventCardController::class . ':getCurrentVehiclesIn');
+    })->add(new \App\Middleware\AuthMiddleware());
+    
+    // route system
     $group->group('/system', function (RouteCollectorProxy $systemGroup) {
-        $systemGroup->get('/event-cards', \App\Controllers\EventCardController::class . ':index');
+        
         $systemGroup->get('/users', \App\Controllers\UserController::class . ':index');
         $systemGroup->get('/roles', \App\Controllers\RoleController::class . ':role');
         $systemGroup->put('/users/{id}/role', \App\Controllers\RoleController::class . ':updateRole');
@@ -152,6 +160,7 @@ $app->group('/api', function (RouteCollectorProxy $group) {
     // route vehicle-group
     $group->group('/vehicle-group', function (RouteCollectorProxy $vehicleGroup) {
         $vehicleGroup->get('/get-all', \App\Controllers\VehicleGroupController::class . ':index'); 
+       
     })->add(new \App\Middleware\AuthMiddleware());
 });
 

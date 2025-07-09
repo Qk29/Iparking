@@ -37,7 +37,7 @@
 ?>
 
 
-<div class="container mt-5">
+<div class="container">
   <h4 class="mb-4">Danh sách Camera</h4>
 
    <div class="row mb-3">

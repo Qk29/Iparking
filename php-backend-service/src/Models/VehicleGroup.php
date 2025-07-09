@@ -13,11 +13,12 @@ use PDO;
          $this->db = Database::getInstance();
      }
 
-     public static function all()
-     {
-         $db = Database::getInstance();
-         $stmt = $db->query("SELECT * FROM [tblVehicleGroup]");    
-         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-     }
+     public static function all(){
+        
+            $db = Database::getInstance();
+            $stmt = $db->query("SELECT * FROM [tblVehicleGroup]");    
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 
     }

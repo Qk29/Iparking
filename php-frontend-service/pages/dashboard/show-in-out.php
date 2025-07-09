@@ -15,7 +15,7 @@ $offsetIn = ($pageNumIn - 1) * $limit;
 $offsetOut = ($pageNumOut - 1) * $limit;
 
 if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
-    $apiUrl = 'http://localhost:8000/api/system/event-cards';
+    $apiUrl = 'http://localhost:8000/api/card-event/event-cards';
 
     $fromDate = str_replace('T', ' ', $_GET['from_date']) . ':00';
     $toDate = str_replace('T', ' ', $_GET['to_date']) . ':00';

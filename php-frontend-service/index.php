@@ -9,9 +9,18 @@ $routes = [
     'event-card' => 'pages/dashboard/show-in-out.php',
 
     // Báo cáo
-    'car-in' =>'pages/dashboard/report/car-in.php',
+        // chi tiết xe trong bãi
+    'car-in' =>'pages/dashboard/report/vehicle-in/vehicle-in.php',
+    'car-in-detail' =>'pages/dashboard/report/vehicle-in/vehicle-in-detail.php',
+        // chi tiết xử lý thẻ
     'process-card-detail' => 'pages/dashboard/report/process-card/process-card-detail.php',
     'process-card-issue' => 'pages/dashboard/report/process-card/process-card-issue.php',
+        // chi tiết thẻ theo căn hộ
+    'apartment-report-detail' => 'pages/dashboard/report/card-apartment/card-apartment-detail.php',
+    'apartment-report-compile' => 'pages/dashboard/report/card-apartment/card-apartment-compile.php',
+        // Xe vào ra
+    'xe-vao' => 'pages/dashboard/report/vehicle-in-out/vehicle-in.php',
+
 
     // Hệ thống
     'user-system' => 'pages/dashboard/system/user.php',
