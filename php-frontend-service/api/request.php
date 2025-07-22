@@ -15,7 +15,8 @@ function apiRequest($method, $url, $data = null, $token = null) {
 
     $result = curl_exec($curl);
     if (curl_errno($curl)) {
-    echo '<p style="color:red;">Lỗi cURL: ' . curl_error($curl) . '</p>';
+    error_log('Curl error: ' . curl_error($curl));
+        return false;
     }
     curl_close($curl);
 

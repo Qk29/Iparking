@@ -109,7 +109,7 @@ class EventCardController {
 public function getVehicleIn(Request $request, Response $response): Response {
     try {
          $params = $request->getQueryParams();
-          error_log("Full params: " . print_r($params, true));
+        
         $from = $params['from_date'] ?? null;
         $to = $params['to_date'] ?? null;
         $customerGroupID = $params['customerSelect'] ?? null;
@@ -124,7 +124,7 @@ public function getVehicleIn(Request $request, Response $response): Response {
             $to = date('Y-m-d H:i:s', strtotime($to));
         }
 
-        error_log("From: $from, To: $to, Customer Group ID: $customerGroupID, Card Group ID: $cardGroupID, Search: $search");
+        
         // Gọi model xử lý lọc
         $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
         $limit = isset($params['limit']) ? (int)$params['limit'] : 20;
@@ -137,6 +137,91 @@ public function getVehicleIn(Request $request, Response $response): Response {
         return $response->withHeader('Content-Type', 'application/json');
 
         
+
+    } catch (\Exception $e) {
+        error_log("Error: " . $e->getMessage());
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'data' => []
+        ]));
+        return $response->withStatus(500)
+                ->withHeader('Content-Type', 'application/json');
+    }
+}
+
+public function getVehicleOut(Request $request, Response $response): Response {
+    try {
+         $params = $request->getQueryParams();
+        
+        $from = $params['from_date'] ?? null;
+        $to = $params['to_date'] ?? null;
+        $customerGroupID = $params['customerSelect'] ?? null;
+        $cardGroupID = $params['cardGroupSelect'] ?? null;
+        $search = $params['search'] ?? null;
+
+        // Chuyển đổi định dạng ngày nếu có ký tự 'T'
+        if ($from && strpos($from, 'T') !== false) {
+            $from = date('Y-m-d H:i:s', strtotime($from));
+        }
+        if ($to && strpos($to, 'T') !== false) {
+            $to = date('Y-m-d H:i:s', strtotime($to));
+        }
+
+        
+        // Gọi model xử lý lọc
+        $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
+        $limit = isset($params['limit']) ? (int)$params['limit'] : 20;
+        $results = $this->eventCardModel->getFilteredVehicleOut($from, $to, $customerGroupID, $cardGroupID, $search, $offset, $limit);
+
+        $response->getBody()->write(json_encode([
+            'success' => true,
+            'data' => $results
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
+
+        
+
+    } catch (\Exception $e) {
+        error_log("Error: " . $e->getMessage());
+        $response->getBody()->write(json_encode([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'data' => []
+        ]));
+        return $response->withStatus(500)
+                ->withHeader('Content-Type', 'application/json');
+    }
+}
+
+public function getVehicleFree(Request $request, Response $response): Response {
+    try {
+        $params = $request->getQueryParams();
+        
+        $from = $params['from_date'] ?? null;
+        $to = $params['to_date'] ?? null;
+        $cardGroupID = $params['cardGroupSelect'] ?? null;
+        $search = $params['search'] ?? null;
+
+        // Chuyển đổi định dạng ngày nếu có ký tự 'T'
+        if ($from && strpos($from, 'T') !== false) {
+            $from = date('Y-m-d H:i:s', strtotime($from));
+        }
+        if ($to && strpos($to, 'T') !== false) {
+            $to = date('Y-m-d H:i:s', strtotime($to));
+        }
+
+        
+        // Gọi model xử lý lọc
+        $offset = isset($params['offset']) ? (int)$params['offset'] : 0;
+        $limit = isset($params['limit']) ? (int)$params['limit'] : 20;
+        $results = $this->eventCardModel->getFilteredVehicleFree($from, $to, $cardGroupID, $search, $offset, $limit);
+
+        $response->getBody()->write(json_encode([
+            'success' => true,
+            'data' => $results
+        ]));
+        return $response->withHeader('Content-Type', 'application/json');
 
     } catch (\Exception $e) {
         error_log("Error: " . $e->getMessage());

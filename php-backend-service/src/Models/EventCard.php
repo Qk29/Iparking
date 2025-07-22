@@ -201,6 +201,84 @@
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);  
     }
+
+    public function getFilteredVehicleOut( $fromDate, $toDate, $customerGroupID, $cardGroupID, $search, $offset = 0, $limit = 20) {
+        $sql = "SELECT c.CardNumber,c.CardNo, c.DatetimeIn, c.DateTimeOut, c.PlateIn,c.PlateOut, c.PicDirIn,c.PicDirOut, c.IsPlateInValid, c.UserIDIn, c.UserIDOut, cg.CardGroupName, cu.CustomerName,uIn.UserName AS UserNameIn, uOut.UserName AS UserNameOut
+                FROM [MPARKINGEVENTTM].[dbo].[tblCardEvent] AS c
+                LEFT JOIN [MPARKINGKH].[dbo].[tblCardGroup] AS cg ON Try_CAST(c.CardGroupID as uniqueidentifier) = cg.CardGroupID
+                LEFT JOIN [MPARKINGKH].[dbo].[tblCustomer] AS cu ON Try_CAST(c.CustomerID as uniqueidentifier) = cu.CustomerID
+                LEFT JOIN [MPARKINGKH].[dbo].[User] AS uIn ON c.UserIDIn = uIn.Id
+                LEFT JOIN [MPARKINGKH].[dbo].[User] AS uOut ON c.UserIDOut = uOut.Id
+                WHERE EventCode = 2 AND c.DateTimeOut BETWEEN :from_date AND :to_date";  
+        $params = [];
+        $params['from_date'] = $fromDate;
+        $params['to_date'] = $toDate;
+        if ($customerGroupID) {
+            $sql .= " AND cu.CustomerGroupID = :cardGroupSelect";
+            $params['cardGroupSelect'] = $customerGroupID;
+        }
+        if ($cardGroupID) {
+            $sql .= " AND c.CardGroupID = :cardGroupID";
+            $params['cardGroupID'] = $cardGroupID;
+        }
+        if ($search) {
+            $sql .= " AND (c.CardNumber LIKE :search OR c.PlateIn LIKE :search)";
+            $params['search'] = '%' . $search . '%';
+        }
+        $sql .= " ORDER BY c.DateTimeOut DESC OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY";
+        
+        $stmt = $this->db2->prepare($sql);
+        foreach ($params as $key => $val) {
+            if ($key === 'offset' || $key === 'limit') continue; // sẽ bind riêng
+            $stmt->bindValue(':' . $key, $val);
+        }
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        if (!$stmt->execute()) {
+            error_log(print_r($stmt->errorInfo(), true));
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+    }
+    public function getFilteredVehicleFree( $fromDate, $toDate, $cardGroupID, $search, $offset = 0, $limit = 20) {
+        $sql = "SELECT c.CardNumber,c.CardNo, c.DatetimeIn,c.DateTimeOut, c.PlateIn, c.PlateOut,c.UserIDIn, c.UserIDOut,c.CustomerName, c.Moneys,  cg.CardGroupName,
+                uIn.UserName AS UserNameIn, uOut.UserName AS UserNameOut, lIn.LaneName AS LaneNameIn, lOut.LaneName AS LaneNameOut
+                FROM [MPARKINGEVENTTM].[dbo].[tblCardEvent] AS c
+                LEFT JOIN [MPARKINGKH].[dbo].[tblCardGroup] AS cg ON Try_CAST(c.CardGroupID as uniqueidentifier) = cg.CardGroupID
+                LEFT JOIN [MPARKINGKH].[dbo].[User] AS uIn ON c.UserIDIn = uIn.Id
+                LEFT JOIN [MPARKINGKH].[dbo].[User] AS uOut ON c.UserIDOut = uOut.Id
+                LEFT JOIN [MPARKINGKH].[dbo].[tblLane] AS lIn ON TRY_CAST(c.LaneIDIn as uniqueidentifier) = lIn.LaneID
+                LEFT JOIN [MPARKINGKH].[dbo].[tblLane] AS lOut ON TRY_CAST(c.LaneIDOut as uniqueidentifier) = lOut.LaneID
+                WHERE IsFree =1 AND (c.DatetimeIn BETWEEN :from_date AND :to_date 
+               OR c.DatetimeOut BETWEEN :from_date AND :to_date)"; 
+        $params = [
+            'from_date' => $fromDate,
+            'to_date' => $toDate,
+        ];  
+        
+        if ($cardGroupID) {
+            $sql .= " AND c.CardGroupID = :cardGroupID";
+            $params['cardGroupID'] = $cardGroupID;
+        }
+        if ($search) {
+            $sql .= " AND (c.CardNumber LIKE :search OR c.PlateIn LIKE :search)";
+            $params['search'] = '%' . $search . '%';
+        }
+
+        $offset = (int)$offset;
+        $limit = (int)$limit;
+        $sql .= " ORDER BY c.DatetimeIn DESC OFFSET $offset ROWS FETCH NEXT $limit ROWS ONLY";
+
+        $stmt = $this->db2->prepare($sql);
+        foreach ($params as $key => $val) {
+            
+            $stmt->bindValue(':' . $key, $val);
+        }
+       
+        if (!$stmt->execute()) {
+            error_log(print_r($stmt->errorInfo(), true));
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 

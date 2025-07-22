@@ -20,7 +20,7 @@ use PHPUnit\Framework\Constraint\Count;
 
     
 
-    $allowedKeys = ['search', 'customerSelect', 'cardGroupSelect', 'from_date', 'to_date'];
+    $allowedKeys = ['search', 'cardGroupSelect', 'from_date', 'to_date'];
     $queryParams = [];
 
     $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
@@ -39,16 +39,16 @@ use PHPUnit\Framework\Constraint\Count;
 
 
     // call api get vehicle in
-    $getVehicleInUrl = 'http://localhost:8000/api/report/vehicle-in?' . http_build_query($queryParams);
-    $vehicleInResponse = apiRequest('GET', $getVehicleInUrl);
+    $getVehicleFreeUrl = 'http://localhost:8000/api/report/vehicle-free?' . http_build_query($queryParams);
+    $vehicleFreeResponse = apiRequest('GET', $getVehicleFreeUrl);
    
-    $vehicleInData = json_decode($vehicleInResponse, true);
+    $vehicleFreeData = json_decode($vehicleFreeResponse, true);
     
 
     $currentPage = floor($offset / $limit) + 1;
     $nextOffset = $offset + $limit;
     $prevOffset = max(0, $offset - $limit);
-    $totalCurrent = isset($vehicleInData['data']) && is_array($vehicleInData['data']) ? count($vehicleInData['data']) : 0;
+    $totalCurrent = isset($vehicleFreeData['data']) && is_array($vehicleFreeData['data']) ? count($vehicleFreeData['data']) : 0;
 ?>
 <style>
     .table {
@@ -63,29 +63,29 @@ use PHPUnit\Framework\Constraint\Count;
       <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
       <li class="breadcrumb-item"><a href="#">Web</a></li>
       <li class="breadcrumb-item"><a href="#">Báo cáo</a></li>
-      <li class="breadcrumb-item"><a href="#">Xe trong bãi</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Xe trong bãi hiện tại</li>
+      <li class="breadcrumb-item"><a href="#">Báo cáo xe miễn phí</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Báo cáo xe miễn phí ra vào</li>
     </ol>
   </nav>
 
   <!-- Title -->
-  <h5 class="mb-3 mt-3">Báo cáo xe vào (<?= Count($vehicleInData['data']) ?>)</h5>
+  <h5 class="mb-3 mt-3">Báo cáo lượt ra vào miễn phí (<?= Count($vehicleFreeData['data']) ?>)</h5>
 
   <!-- Bộ lọc tìm kiếm -->
   <div class="bg-white p-3 border rounded mb-4">
     <form method="GET" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="row g-3 align-items-end">
-        <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'] ?? 'xe-vao'); ?>">
+        <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'] ?? 'vehicle-free'); ?>">
       <div class="col-md-3">
         <label class="form-label">Từ khóa</label>
         <input type="text" name="search" class="form-control" placeholder="Mã thẻ, Biển số...">
       </div>
 
       <div class="col-md-3">
-        <label class="form-label">Nhóm khách hàng</label>
-        <select name="customerSelect" class="form-select">
-          <option value="" selected>--Chọn nhóm khách hàng--</option>
-          <?php foreach($customerGroups as $group) : ?>
-            <option value="<?= $group['CustomerGroupID'] ?>"><?= $group['CustomerGroupName'] ?></option>
+        <label class="form-label">Nhóm thẻ</label>
+        <select name="cardGroupSelect" class="form-select">
+          <option value="" selected>-- Nhóm thẻ --</option>
+          <?php foreach($cardCategories as $card) : ?>
+            <option value="<?= $card['CardGroupID'] ?>"><?= $card['CardGroupName'] ?></option>
           <?php endforeach; ?>
         </select>
       </div>
@@ -100,22 +100,16 @@ use PHPUnit\Framework\Constraint\Count;
         <input type="datetime-local" name="to_date" id="to_date" class="form-control" value="<?= $_GET['to_date'] ?? $currentDate ?>" required>
     </div>
 
-      <div class="col-md-3">
-        <label class="form-label">Nhóm thẻ</label>
-        <select name="cardGroupSelect" class="form-select">
-          <option value="" selected>-- Nhóm thẻ --</option>
-          <?php foreach($cardCategories as $card) : ?>
-            <option value="<?= $card['CardGroupID'] ?>"><?= $card['CardGroupName'] ?></option>
-          <?php endforeach; ?>
-        </select>
-      </div>
+      
 
       <div class="col-12 d-flex align-items-center">
         
 
         <button  class="btn btn-primary me-2">Tìm kiếm</button>
         <button  class="btn btn-outline-secondary me-2">Reset</button>
-        <button  class="btn btn-success">Xuất Excel</button>
+        <a href="pages/dashboard/report/vehicle-in-out/export_vehicle_out_excel.php?<?= http_build_query($queryParams) ?>" class="btn btn-success">
+            Xuất Excel
+        </a>
       </div>
     </form>
   </div>
@@ -128,36 +122,36 @@ use PHPUnit\Framework\Constraint\Count;
           <th>STT</th>
           <th>CardNo</th>
           <th>Mã thẻ</th>
-          <th>Biển số hợp lệ</th>
           <th>Biển số</th>
-          <th>Thời gian vào</th>
-          <th>Ảnh vào</th>
+          <th>Thời điểm vào</th>
+          <th>Thời điểm ra</th>
           <th>Nhóm thẻ</th>
           <th>Khách hàng</th>
           <th>Làn vào</th>
-          <th>Giám sát vào</th>
+          <th>Làn ra</th>
+          <th>Kiểm soát vào</th>
+          <th>Kiểm soát ra</th>
+          <th>Số tiền</th>
+        
         </tr>
       </thead>
       <tbody class="text-center">
             
-            <?php $stt = 1; foreach ($vehicleInData['data'] as $vehicle): ?>
+            <?php $stt = 1; foreach ($vehicleFreeData['data'] as $vehicle): ?>
               <tr>
                 <td><?= $stt++ ?></td>
                 <td><?= $vehicle['CardNo'] ?></td>
                 <td><?= $vehicle['CardNumber'] ?></td>
-                <td>
-                    <?php if ($vehicle['IsPlateInValid'] == 1): ?>
-                        <span style="color: green; font-weight: bold;">✔️ Hợp lệ</span>
-                    <?php else: ?>
-                        <span style="color: red; font-weight: bold;">❌ Không hợp lệ</span>
-                    <?php endif; ?>
-                </td>
-                <td><?= $vehicle['PlateIn'] ?></td>
+                <td><?= $vehicle['PlateIn'] == $vehicle['PlateOut'] ?  $vehicle['PlateIn'] : '' ?></td>
                 <td><?= $vehicle['DatetimeIn'] ?></td>
-                <td><img src="<?= $vehicle['PicDirIn'] ?>" width="70" /></td>
+                <td><?= $vehicle['DateTimeOut'] ?></td> 
                 <td><?= $vehicle['CardGroupName'] ?></td>
                 <td><?= $vehicle['CustomerName'] ?></td>
-                <td></td>
+                <td><?= $vehicle['LaneNameIn'] ?></td>
+                <td><?= $vehicle['LaneNameOut'] ?></td>
+                <td><?= $vehicle['UserNameIn'] ?></td>
+                <td><?= $vehicle['UserNameOut'] ?></td>
+                <td><?= $vehicle['Moneys'] ?></td>
 
               </tr>
             <?php endforeach; ?>

@@ -39,7 +39,7 @@ use PHPUnit\Framework\Constraint\Count;
 
 
     // call api get vehicle in
-    $getVehicleInUrl = 'http://localhost:8000/api/report/vehicle-in?' . http_build_query($queryParams);
+    $getVehicleInUrl = 'http://localhost:8000/api/report/vehicle-out?' . http_build_query($queryParams);
     $vehicleInResponse = apiRequest('GET', $getVehicleInUrl);
    
     $vehicleInData = json_decode($vehicleInResponse, true);
@@ -64,12 +64,12 @@ use PHPUnit\Framework\Constraint\Count;
       <li class="breadcrumb-item"><a href="#">Web</a></li>
       <li class="breadcrumb-item"><a href="#">Báo cáo</a></li>
       <li class="breadcrumb-item"><a href="#">Xe trong bãi</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Xe trong bãi hiện tại</li>
+      <li class="breadcrumb-item active" aria-current="page">Báo cáo xe ra</li>
     </ol>
   </nav>
 
   <!-- Title -->
-  <h5 class="mb-3 mt-3">Báo cáo xe vào (<?= Count($vehicleInData['data']) ?>)</h5>
+  <h5 class="mb-3 mt-3">Báo cáo xe ra (<?= Count($vehicleInData['data']) ?>)</h5>
 
   <!-- Bộ lọc tìm kiếm -->
   <div class="bg-white p-3 border rounded mb-4">
@@ -115,7 +115,9 @@ use PHPUnit\Framework\Constraint\Count;
 
         <button  class="btn btn-primary me-2">Tìm kiếm</button>
         <button  class="btn btn-outline-secondary me-2">Reset</button>
-        <button  class="btn btn-success">Xuất Excel</button>
+        <a href="pages/dashboard/report/vehicle-in-out/export_vehicle_out_excel.php?<?= http_build_query($queryParams) ?>" class="btn btn-success">
+            Xuất Excel
+        </a>
       </div>
     </form>
   </div>
@@ -129,13 +131,16 @@ use PHPUnit\Framework\Constraint\Count;
           <th>CardNo</th>
           <th>Mã thẻ</th>
           <th>Biển số hợp lệ</th>
-          <th>Biển số</th>
+          <th>Biển số vào</th>
+          <th>Biển số ra</th>
           <th>Thời gian vào</th>
+          <th>Thời gian ra</th>
+          <th>Giám sát vào</th>
+          <th>Giám sát ra</th>
           <th>Ảnh vào</th>
+          <th>Ảnh ra</th>
           <th>Nhóm thẻ</th>
           <th>Khách hàng</th>
-          <th>Làn vào</th>
-          <th>Giám sát vào</th>
         </tr>
       </thead>
       <tbody class="text-center">
@@ -145,19 +150,17 @@ use PHPUnit\Framework\Constraint\Count;
                 <td><?= $stt++ ?></td>
                 <td><?= $vehicle['CardNo'] ?></td>
                 <td><?= $vehicle['CardNumber'] ?></td>
-                <td>
-                    <?php if ($vehicle['IsPlateInValid'] == 1): ?>
-                        <span style="color: green; font-weight: bold;">✔️ Hợp lệ</span>
-                    <?php else: ?>
-                        <span style="color: red; font-weight: bold;">❌ Không hợp lệ</span>
-                    <?php endif; ?>
-                </td>
+                <td class="text-success"><?= $vehicle['IsPlateInValid'] == 1 ? 'Hợp lệ' : 'Không hợp lệ' ?></td>
                 <td><?= $vehicle['PlateIn'] ?></td>
+                <td><?= $vehicle['PlateOut'] ?></td>
                 <td><?= $vehicle['DatetimeIn'] ?></td>
+                <td><?= $vehicle['DateTimeOut'] ?></td> 
+                <td><?= $vehicle['UserNameIn'] ?></td>
+                <td><?= $vehicle['UserNameOut'] ?></td>
                 <td><img src="<?= $vehicle['PicDirIn'] ?>" width="70" /></td>
+                <td><img src="<?= $vehicle['PicDirOut'] ?>" width="70" /></td>
                 <td><?= $vehicle['CardGroupName'] ?></td>
                 <td><?= $vehicle['CustomerName'] ?></td>
-                <td></td>
 
               </tr>
             <?php endforeach; ?>

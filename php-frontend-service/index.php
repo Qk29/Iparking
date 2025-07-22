@@ -20,6 +20,10 @@ $routes = [
     'apartment-report-compile' => 'pages/dashboard/report/card-apartment/card-apartment-compile.php',
         // Xe vào ra
     'xe-vao' => 'pages/dashboard/report/vehicle-in-out/vehicle-in.php',
+    'xe-ra' => 'pages/dashboard/report/vehicle-in-out/vehicle-out.php',
+        // Xe ra vào miễn phí
+    'vehicle-free' => 'pages/dashboard/report/vehicle-free/vehicle-free.php',
+        // Báo cáo thẻ    
 
 
     // Hệ thống

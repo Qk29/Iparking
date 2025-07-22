@@ -131,7 +131,7 @@
                         <ul class="submenu-inner">
 
                           <li class="nav-item">
-                            <a href="javascript:void(0)" class="nav-link">
+                            <a href="index.php?page=xe-ra" class="nav-link">
                               <span class="nav-text">
                                 <span>Xe ra khỏi bãi</span>
                               </span>
@@ -157,11 +157,26 @@
                       </li>
 
                       <li class="nav-item">
-                        <a href="html/horizontal.html" class="nav-link">
+                        <a href="html/horizontal.html" class="nav-link dropdown-toggle collapsed">
                           <span class="nav-text">
                				  <span>Lượt xe ra vào miễn phí</span>
+                        <b class="caret fa fa-angle-left rt-n90"></b>
                           </span>
+                          
                         </a>
+                        <div class="submenu collapse" id="car-free">
+                        <ul class="submenu-inner">
+
+                          <li class="nav-item">
+                            <a href="index.php?page=vehicle-free" class="nav-link">
+                              <span class="nav-text">
+                                <span>Miễn phí hoàn toàn</span>
+                              </span>
+                            </a>
+                          </li>
+
+                        </ul>
+                        </div>
                       </li>
 
                       <li class="nav-item">

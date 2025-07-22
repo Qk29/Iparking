@@ -14,6 +14,8 @@ $app->group('/api', function (RouteCollectorProxy $group) {
         $reportGroup->get('/card-process-detail', \App\Controllers\CardProcessController::class . ':cardProcessDetail');
         $reportGroup->get('/process-card-issue', \App\Controllers\CardProcessController::class . ':CardIssueSummary');
         $reportGroup->get('/vehicle-in', \App\Controllers\EventCardController::class . ':getVehicleIn');
+        $reportGroup->get('/vehicle-out', \App\Controllers\EventCardController::class . ':getVehicleOut');
+        $reportGroup->get('/vehicle-free', \App\Controllers\EventCardController::class . ':getVehicleFree');
     })->add(new \App\Middleware\AuthMiddleware());
 
     // route user
